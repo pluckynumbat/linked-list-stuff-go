@@ -71,3 +71,15 @@ func (list *LinkedList) PrintList() {
 	fmt.Print("null")
 	fmt.Println("")
 }
+
+func (list *LinkedList) GetStringForm() string {
+	result := ""
+
+	runner := list.head
+	for runner != nil {
+		result += runner.data + "->"
+		runner = runner.next
+	}
+	result += "null"
+	return result
+}
