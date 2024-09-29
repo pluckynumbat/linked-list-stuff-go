@@ -10,7 +10,7 @@ func TestStringForm(t *testing.T) {
 	want := "1->nil"
 	have := list.GetStringForm()
 	if strings.Compare(want, have) != 0 {
-		t.Fatalf("GetStringForm Fails: wanted '%s', got '%s'", want, have)
+		t.Errorf("GetStringForm Fails: wanted '%s', got '%s'", want, have)
 	}
 }
 
@@ -20,7 +20,7 @@ func TestAddToEnd(t *testing.T) {
 	want := "1->2->nil"
 	have := list.GetStringForm()
 	if strings.Compare(want, have) != 0 {
-		t.Fatalf("GetStringForm Fails: wanted '%s', got '%s'", want, have)
+		t.Errorf("AddToEnd Fails: wanted '%s', got '%s'", want, have)
 	}
 }
 
@@ -30,7 +30,7 @@ func TestAddToBeginning(t *testing.T) {
 	want := "2->1->nil"
 	have := list.GetStringForm()
 	if strings.Compare(want, have) != 0 {
-		t.Fatalf("GetStringForm Fails: wanted '%s', got '%s'", want, have)
+		t.Errorf("AddToBeginning Fails: wanted '%s', got '%s'", want, have)
 	}
 }
 
@@ -42,6 +42,6 @@ func TestReverse(t *testing.T) {
 	want := "1->2->3->nil"
 	have := list.GetStringForm()
 	if strings.Compare(want, have) != 0 {
-		t.Fatalf("GetStringForm Fails: wanted '%s', got '%s'", want, have)
+		t.Errorf("Reverse Fails: wanted '%s', got '%s'", want, have)
 	}
 }
