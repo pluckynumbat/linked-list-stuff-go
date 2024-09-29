@@ -45,3 +45,20 @@ func TestReverse(t *testing.T) {
 		t.Errorf("Reverse Fails: wanted '%s', got '%s'", want, have)
 	}
 }
+
+func TestConstructFromValues(t *testing.T) {
+	list1 := constructList(constructNode("t"))
+	list1.AddToBeginning("a")
+	list1.AddToEnd("e")
+	list1.AddToBeginning("w")
+	list1.AddToEnd("r")
+
+	list2 := ConstructFromValues("w", "a", "t", "e", "r")
+
+	want := list1.GetStringForm()
+	have := list2.GetStringForm()
+
+	if strings.Compare(want, have) != 0 {
+		t.Errorf("ConstructFromValues Fails: wanted '%s', got '%s'", want, have)
+	}
+}
