@@ -75,19 +75,6 @@ func (list *LinkedList) Reverse() {
 	list.head = prev
 }
 
-func (list *LinkedList) PrintList() {
-	fmt.Println("Printing the list: ")
-	var runner *Node
-	runner = list.head
-
-	for runner != nil {
-		fmt.Printf("%s->", runner.data)
-		runner = runner.next
-	}
-	fmt.Print("null")
-	fmt.Println("")
-}
-
 func (list *LinkedList) GetStringForm() string {
 	result := ""
 
@@ -96,6 +83,6 @@ func (list *LinkedList) GetStringForm() string {
 		result += runner.data + "->"
 		runner = runner.next
 	}
-	result += "null"
+	result += "nil"
 	return result
 }
