@@ -11,22 +11,38 @@ type Node struct {
 	next *Node
 }
 
-func ConstructNode(inputData string) *Node {
+func constructNode(inputData string) *Node {
 	node := new(Node) //used 'new' allocator
 	node.data = inputData
 	node.next = nil
 	return node
 }
 
-func ConstructList(newHead *Node) LinkedList {
+func constructList(newHead *Node) LinkedList {
 	linkedList := LinkedList{newHead} // used composite literal
 	linkedList.head = newHead
 	return linkedList
 }
 
+func ConstructFromValues(values ...string) LinkedList {
+	if len(values) == 0 {
+		fmt.Println("Warning, creating an empty list")
+		return LinkedList{}
+	}
+
+	newList := constructList(constructNode(values[0]))
+
+	// TODO: make this use AddToBeginning instead of AddToEnd to make it more efficient
+	for i := 1; i < len(values); i++ {
+		newList.AddToEnd(values[i])
+	}
+
+	return newList
+}
+
 func (list *LinkedList) AddToEnd(inputData string) {
 
-	node := ConstructNode(inputData)
+	node := constructNode(inputData)
 
 	runner := list.head
 	for runner.next != nil {
@@ -37,7 +53,7 @@ func (list *LinkedList) AddToEnd(inputData string) {
 
 func (list *LinkedList) AddToBeginning(inputData string) {
 
-	node := ConstructNode(inputData)
+	node := constructNode(inputData)
 
 	node.next = list.head
 	list.head = node

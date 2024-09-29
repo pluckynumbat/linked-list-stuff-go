@@ -6,7 +6,7 @@ import (
 )
 
 func TestStringForm(t *testing.T) {
-	list := ConstructList(ConstructNode("1"))
+	list := constructList(constructNode("1"))
 	want := "1->null"
 	have := list.GetStringForm()
 	if strings.Compare(want, have) != 0 {
@@ -15,7 +15,7 @@ func TestStringForm(t *testing.T) {
 }
 
 func TestAddToEnd(t *testing.T) {
-	list := ConstructList(ConstructNode("1"))
+	list := constructList(constructNode("1"))
 	list.AddToEnd("2")
 	want := "1->2->null"
 	have := list.GetStringForm()
@@ -25,7 +25,7 @@ func TestAddToEnd(t *testing.T) {
 }
 
 func TestAddToBeginning(t *testing.T) {
-	list := ConstructList(ConstructNode("1"))
+	list := constructList(constructNode("1"))
 	list.AddToBeginning("2")
 	want := "2->1->null"
 	have := list.GetStringForm()
@@ -35,7 +35,7 @@ func TestAddToBeginning(t *testing.T) {
 }
 
 func TestReverse(t *testing.T) {
-	list := ConstructList(ConstructNode("2"))
+	list := constructList(constructNode("2"))
 	list.AddToEnd("1")
 	list.AddToBeginning("3")
 	list.Reverse()
