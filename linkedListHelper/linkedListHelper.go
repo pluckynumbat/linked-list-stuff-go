@@ -8,8 +8,7 @@ import (
 func main() {
 	fmt.Println("let's help you with a linked list")
 	basicAddStuff()
-	basicRemovalStuff()
-
+	
 }
 
 func basicAddStuff() {
