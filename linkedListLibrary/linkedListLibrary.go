@@ -1,6 +1,9 @@
 package linkedListLibrary
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type LinkedList struct {
 	head *Node
@@ -85,4 +88,39 @@ func (list *LinkedList) GetStringForm() string {
 	}
 	result += "nil"
 	return result
+}
+
+func (list *LinkedList) RemoveValue(val string) {
+	fmt.Println("")
+	if list.head == nil { // no elements in the list
+		fmt.Println("The list doesn't have anything")
+		return
+	}
+
+	if strings.Compare(list.head.data, val) == 0 { // the value is at the head
+		fmt.Printf("found the value '%s'! removing it\n", val)
+		list.head = list.head.next
+		return
+	}
+
+	//we can start with head.next since we've already covered the value at head case above
+	runner := list.head.next
+	prev := list.head
+
+	var found bool
+	for runner != nil {
+		if strings.Compare(runner.data, val) == 0 {
+			fmt.Printf("found the value '%s'! removing it\n", val)
+			prev.next = runner.next
+			found = true
+			break
+		}
+		prev = runner
+		runner = runner.next
+	}
+
+	if !found {
+		fmt.Printf("value '%s' wasn't found in the list\n", val)
+	}
+
 }
