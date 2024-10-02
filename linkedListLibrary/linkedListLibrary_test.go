@@ -79,7 +79,7 @@ func TestIsEmptyTrue(t *testing.T) {
 	want := true
 	have := list.IsEmpty()
 	if want != have {
-		t.Errorf("ConstructFromValues Fails: wanted '%v', got '%v'", want, have)
+		t.Errorf("ConstructFromValues Fails: wanted '%t', got '%t'", want, have)
 	}
 }
 
@@ -89,7 +89,7 @@ func TestIsEmptyFalse(t *testing.T) {
 	want := false
 	have := list.IsEmpty()
 	if want != have {
-		t.Errorf("ConstructFromValues Fails: wanted '%v', got '%v'", want, have)
+		t.Errorf("ConstructFromValues Fails: wanted '%t', got '%t'", want, have)
 	}
 }
 
