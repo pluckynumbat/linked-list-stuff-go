@@ -43,6 +43,10 @@ func ConstructFromValues(values ...string) LinkedList {
 	return newList
 }
 
+func (list *LinkedList) IsEmpty() bool {
+	return list.head == nil
+}
+
 func (list *LinkedList) AddToEnd(inputData string) {
 
 	node := constructNode(inputData)
@@ -92,7 +96,7 @@ func (list *LinkedList) GetStringForm() string {
 
 func (list *LinkedList) RemoveValue(val string) {
 	fmt.Println("")
-	if list.head == nil { // no elements in the list
+	if list.IsEmpty() { // no elements in the list
 		fmt.Println("The list doesn't have anything")
 		return
 	}

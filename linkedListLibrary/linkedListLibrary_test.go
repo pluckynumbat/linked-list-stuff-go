@@ -73,6 +73,26 @@ func TestConstructEmptyList(t *testing.T) {
 	}
 }
 
+func TestIsEmptyTrue(t *testing.T) {
+	list := ConstructFromValues()
+
+	want := true
+	have := list.IsEmpty()
+	if want != have {
+		t.Errorf("ConstructFromValues Fails: wanted '%v', got '%v'", want, have)
+	}
+}
+
+func TestIsEmptyFalse(t *testing.T) {
+	list := ConstructFromValues("hi")
+
+	want := false
+	have := list.IsEmpty()
+	if want != have {
+		t.Errorf("ConstructFromValues Fails: wanted '%v', got '%v'", want, have)
+	}
+}
+
 func TestRemoveInvalidValue(t *testing.T) {
 	list := ConstructFromValues("bat", "cat", "mat")
 	want := list.GetStringForm()
