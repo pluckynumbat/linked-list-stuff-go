@@ -9,6 +9,7 @@ func main() {
 	fmt.Println("let's help you with a linked list")
 	basicAddStuff()
 	basicRemovalStuff()
+	removeAtEndStuff()
 }
 
 func basicAddStuff() {
@@ -37,3 +38,18 @@ func basicRemovalStuff() {
 	list.RemoveValue("b")
 	fmt.Println("")
 }
+
+func removeAtEndStuff() {
+	list := linkedListLibrary.ConstructFromValues("w", "h", "a", "t")
+	fmt.Printf("here's your list: %s \n", list.GetStringForm())
+
+	for !list.IsEmpty() {
+		list.RemoveAtEnd()
+		fmt.Printf("here's your list: %s \n", list.GetStringForm())
+	}
+
+	list.RemoveAtEnd()
+	fmt.Printf("here's your list: %s \n", list.GetStringForm())
+	fmt.Println("")
+}
+
