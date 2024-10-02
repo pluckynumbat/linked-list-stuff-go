@@ -128,3 +128,27 @@ func (list *LinkedList) RemoveValue(val string) {
 	}
 
 }
+
+func (list *LinkedList) RemoveAtEnd() {
+	if list.IsEmpty() { // no elements in the list
+		fmt.Println("The list doesn't have anything")
+		return
+	}
+
+	if list.head.next == nil { // only one element
+		list.head = nil
+		return
+	}
+
+	runner := list.head
+	var prev *Node
+
+	for runner.next != nil {
+		prev = runner
+		runner = runner.next
+	}
+
+	runner = nil
+	prev.next = runner
+}
+
