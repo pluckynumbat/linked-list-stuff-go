@@ -322,7 +322,7 @@ func TestRemoveAtBeginningTillEmpty(t *testing.T) {
 	}
 
 	//also try removing from empty
-	list1.RemoveAtEnd()
+	list1.RemoveAtBeginning()
 
 	list2 := ConstructFromValues()
 	want := list2.GetStringForm()
