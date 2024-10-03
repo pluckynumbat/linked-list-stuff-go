@@ -152,3 +152,16 @@ func (list *LinkedList) RemoveAtEnd() {
 	prev.next = runner
 }
 
+func (list *LinkedList) RemoveAtBeginning() {
+	if list.IsEmpty() { // no elements in the list
+		fmt.Println("The list doesn't have anything")
+		return
+	}
+
+	if list.head.next == nil { // only one element
+		list.head = nil
+		return
+	}
+
+	list.head = list.head.next
+}
