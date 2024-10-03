@@ -256,3 +256,80 @@ func TestRemoveAtEndTillEmpty(t *testing.T) {
 	}
 
 }
+
+func TestRemoveAtBeginning(t *testing.T) {
+	list1 := ConstructFromValues("w", "h", "a", "t")
+	list1.RemoveAtBeginning()
+
+	list2 := ConstructFromValues("h", "a", "t")
+
+	want := list2.GetStringForm()
+	have := list1.GetStringForm()
+
+	if strings.Compare(want, have) != 0 {
+		t.Errorf("RemoveValue Fails: wanted '%s', got '%s'", want, have)
+	}
+}
+
+func TestRemoveAtBeginningOnlyOneLeft(t *testing.T) {
+	list1 := ConstructFromValues("a")
+	list1.RemoveAtBeginning()
+
+	list2 := ConstructFromValues()
+
+	want := list2.GetStringForm()
+	have := list1.GetStringForm()
+
+	if strings.Compare(want, have) != 0 {
+		t.Errorf("RemoveValue Fails: wanted '%s', got '%s'", want, have)
+	}
+}
+
+func TestRemoveAtBeginningEmptyList(t *testing.T) {
+	list1 := ConstructFromValues()
+	list1.RemoveAtBeginning()
+
+	list2 := ConstructFromValues()
+
+	want := list2.GetStringForm()
+	have := list1.GetStringForm()
+
+	if strings.Compare(want, have) != 0 {
+		t.Errorf("RemoveValue Fails: wanted '%s', got '%s'", want, have)
+	}
+}
+
+func TestRemoveAtBeginningTillEmpty(t *testing.T) {
+	list1 := ConstructFromValues("w", "h", "a", "t")
+
+	partial := [...]LinkedList{
+		ConstructFromValues("h", "a", "t"),
+		ConstructFromValues("a", "t"),
+		ConstructFromValues("t"),
+		ConstructFromValues(),
+	}
+
+	i := 0
+	for i = 0; !list1.IsEmpty(); i++ {
+		list1.RemoveAtBeginning()
+
+		want := partial[i].GetStringForm()
+		have := list1.GetStringForm()
+
+		if strings.Compare(want, have) != 0 {
+			t.Fatalf("RemoveValue Fails: wanted '%s', got '%s'", want, have)
+		}
+	}
+
+	//also try removing from empty
+	list1.RemoveAtEnd()
+
+	list2 := ConstructFromValues()
+	want := list2.GetStringForm()
+	have := list1.GetStringForm()
+
+	if strings.Compare(want, have) != 0 {
+		t.Fatalf("RemoveValue Fails: wanted '%s', got '%s'", want, have)
+	}
+
+}
