@@ -11,6 +11,7 @@ func main() {
 	basicRemovalStuff()
 	removeAtEndStuff()
 	removeAtBeginningStuff()
+	basicCopyStuff()
 }
 
 func basicAddStuff() {
@@ -66,4 +67,12 @@ func removeAtBeginningStuff() {
 	list.RemoveAtBeginning()
 	fmt.Printf("here's your list: %s \n", list.GetStringForm())
 	fmt.Println("")
+}
+
+func basicCopyStuff() {
+	list := linkedListLibrary.ConstructFromValues("w", "h", "a", "t")
+	fmt.Printf("here's your list: %s \n", list.GetStringForm())
+
+	list2 := list.Copy()
+	fmt.Printf("here's your other list: %s \n", list2.GetStringForm())
 }
