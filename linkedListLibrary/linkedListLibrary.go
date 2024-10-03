@@ -47,6 +47,28 @@ func (list *LinkedList) IsEmpty() bool {
 	return list.head == nil
 }
 
+func (list *LinkedList) Copy() LinkedList {
+	if list.IsEmpty() {
+		fmt.Println("Warning, copying an empty list")
+		return LinkedList{}
+	}
+
+	newList := constructList(constructNode(list.head.data))
+
+	runner := list.head.next
+
+	// AddToBeginning(), followed by a Reverse() should be more efficient than AddToEnd()
+	for runner != nil {
+		newList.AddToBeginning(runner.data)
+		runner = runner.next
+	}
+
+	newList.Reverse()
+
+	return newList
+
+}
+
 func (list *LinkedList) AddToEnd(inputData string) {
 
 	node := constructNode(inputData)
