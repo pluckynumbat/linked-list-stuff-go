@@ -333,3 +333,25 @@ func TestRemoveAtBeginningTillEmpty(t *testing.T) {
 	}
 
 }
+
+func TestCopy(t *testing.T) {
+
+	cases := []LinkedList{
+		ConstructFromValues("w", "h", "a", "t"),
+		ConstructFromValues("a"),
+		ConstructFromValues(),
+	}
+
+	for i := 0; i < len(cases); i++ {
+
+		list := cases[i].Copy()
+
+		want := cases[i].GetStringForm()
+
+		have := list.GetStringForm()
+
+		if strings.Compare(want, have) != 0 {
+			t.Fatalf("RemoveValue Fails: wanted '%s', got '%s'", want, have)
+		}
+	}
+}
