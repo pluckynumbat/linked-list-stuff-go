@@ -12,8 +12,8 @@ func main() {
 
 func basicCopyStuff() {
 	list := linkedListLibrary.ConstructFromValues("w", "h", "a", "t")
-	fmt.Printf("here's your list: %s \n", list.GetStringForm())
+	fmt.Println("here's your list:", list.GetStringForm())
 
 	list2 := list.Copy()
-	fmt.Printf("here's your other list: %s \n", list2.GetStringForm())
+	fmt.Println("here's your other list:", list2.GetStringForm())
 }
