@@ -21,6 +21,14 @@ func constructNode(inputData string) *Node {
 	return node
 }
 
+func (n *Node) GetData() (string, error) {
+	if n == nil {
+		return "", fmt.Errorf("the node is nil")
+	}
+
+	return n.data, nil
+}
+
 func constructList(newHead *Node) LinkedList {
 	linkedList := LinkedList{newHead} // used composite literal
 	linkedList.head = newHead
