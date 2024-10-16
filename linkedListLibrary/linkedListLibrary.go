@@ -159,15 +159,18 @@ func (list *LinkedList) RemoveValue(val string) {
 
 }
 
-func (list *LinkedList) RemoveAtEnd() {
+func (list *LinkedList) RemoveAtEnd() *Node {
 	if list.IsEmpty() { // no elements in the list
 		fmt.Println("The list doesn't have anything")
-		return
+		return nil
 	}
 
+	var removed *Node
+
 	if list.head.next == nil { // only one element
+		removed = list.head
 		list.head = nil
-		return
+		return removed
 	}
 
 	runner := list.head
@@ -178,8 +181,11 @@ func (list *LinkedList) RemoveAtEnd() {
 		runner = runner.next
 	}
 
+	removed = runner
 	runner = nil
 	prev.next = runner
+
+	return removed
 }
 
 func (list *LinkedList) RemoveAtBeginning() *Node {
