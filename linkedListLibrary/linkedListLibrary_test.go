@@ -400,3 +400,28 @@ func TestRemovedAtBeginningValues(t *testing.T) {
 	}
 }
 
+func TestNodeGetData(t *testing.T) {
+	list := ConstructFromValues("w", "h", "a", "t")
+	removed := []string{"t", "a", "h", "w"}
+
+	for i := 0; !list.IsEmpty(); i++ {
+		n := list.RemoveAtEnd()
+
+		have, err := n.GetData()
+		if err != nil {
+			t.Fatalf("GetData returned an error: %v", err)
+		}
+		want := removed[i]
+
+		if strings.Compare(want, have) != 0 {
+			t.Fatalf("GetData Fails: wanted '%s', got '%s'", want, have)
+		}
+	}
+
+	n := list.RemoveAtEnd()
+	have, err := n.GetData()
+
+	if err == nil || strings.Compare(have, "") != 0 {
+		t.Fatalf("GetData should have returned an error on a nil node")
+	}
+}
