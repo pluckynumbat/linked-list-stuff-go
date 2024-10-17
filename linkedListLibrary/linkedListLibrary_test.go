@@ -355,3 +355,48 @@ func TestCopy(t *testing.T) {
 		}
 	}
 }
+
+func TestRemovedAtEndValues(t *testing.T) {
+	list := ConstructFromValues("w", "h", "a", "t")
+	removed := []string{"t", "a", "h", "w"}
+
+	for i := 0; !list.IsEmpty(); i++ {
+		n := list.RemoveAtEnd()
+
+		have := n.data
+		want := removed[i]
+
+		if strings.Compare(want, have) != 0 {
+			t.Fatalf("RemoveAtEnd Fails: wanted '%s', got '%s'", want, have)
+		}
+	}
+
+	n := list.RemoveAtEnd()
+
+	if n != nil {
+		t.Fatalf("RemoveAtEnd Fails: wanted nil, got %v", n)
+	}
+}
+
+func TestRemovedAtBeginningValues(t *testing.T) {
+	list := ConstructFromValues("w", "h", "a", "t")
+	removed := []string{"w", "h", "a", "t"}
+
+	for i := 0; !list.IsEmpty(); i++ {
+		n := list.RemoveAtBeginning()
+
+		have := n.data
+		want := removed[i]
+
+		if strings.Compare(want, have) != 0 {
+			t.Fatalf("RemoveAtBeginning Fails: wanted '%s', got '%s'", want, have)
+		}
+	}
+
+	n := list.RemoveAtBeginning()
+
+	if n != nil {
+		t.Fatalf("RemoveAtBeginning Fails: wanted nil, got %v", n)
+	}
+}
+
