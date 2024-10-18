@@ -1,4 +1,4 @@
-package linkedListLibrary
+package listlib
 
 import (
 	"strings"
