@@ -1,4 +1,4 @@
 # linked-list-stuff-go
 
 Hi There!\
-This is a repo containing some linked list stuff in go
+This repo contains some linked list stuff in go
