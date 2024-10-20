@@ -33,3 +33,10 @@ func (tl *TailedList) String() string {
 	return str
 }
 
+func constructListFromNode(node *Node) (tlist TailedList) {
+	tlist = TailedList{}
+	tlist.head = node
+	tlist.tail = node
+
+	return
+}
