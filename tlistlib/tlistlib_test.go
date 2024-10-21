@@ -47,3 +47,26 @@ func TestSingleElementTailedListTail(t *testing.T) {
 		t.Errorf("Tail of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
 	}
 }
+
+func TestIsEmptyTrue(t *testing.T) {
+	tl := &TailedList{}
+
+	want := true
+	got := tl.IsEmpty()
+
+	if got != want {
+		t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
+	}
+}
+
+func TestIsEmptyFalse(t *testing.T) {
+	tl := constructListFromNode(&Node{"a", nil})
+
+
+	want := false
+	got := tl.IsEmpty()
+
+	if got != want {
+		t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
+	}
+}
