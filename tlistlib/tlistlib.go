@@ -44,3 +44,18 @@ func constructListFromNode(node *Node) (tlist TailedList) {
 func (tl *TailedList) IsEmpty() bool {
 	return tl.head == nil
 }
+
+func (tl *TailedList) AddToEnd(val string) {
+
+	n := &Node{val, nil}
+
+	if tl.IsEmpty() {
+		tl.head = n
+		tl.tail = n
+		return
+	}
+
+	tl.tail.next = n
+	tl.tail = n
+}
+
