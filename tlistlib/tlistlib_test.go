@@ -62,7 +62,6 @@ func TestIsEmptyTrue(t *testing.T) {
 func TestIsEmptyFalse(t *testing.T) {
 	tl := constructListFromNode(&Node{"a", nil})
 
-
 	want := false
 	got := tl.IsEmpty()
 
@@ -71,9 +70,9 @@ func TestIsEmptyFalse(t *testing.T) {
 	}
 }
 
-func TestAddToEndOnAnEmptyList(t *testing.T) {
+func TestAddAtEndOnAnEmptyList(t *testing.T) {
 	tl := &TailedList{}
-	tl.AddToEnd("a")
+	tl.AddAtEnd("a")
 
 	want := "a->nil"
 	got := tl.String()
@@ -94,9 +93,9 @@ func TestAddToEndOnAnEmptyList(t *testing.T) {
 	}
 }
 
-func TestAddToEndOnANonEmptyList(t *testing.T) {
+func TestAddAtEndOnANonEmptyList(t *testing.T) {
 	tl := constructListFromNode(&Node{"a", nil})
-	tl.AddToEnd("b")
+	tl.AddAtEnd("b")
 
 	want := "a->b->nil"
 	got := tl.String()

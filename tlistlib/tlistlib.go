@@ -45,7 +45,7 @@ func (tl *TailedList) IsEmpty() bool {
 	return tl.head == nil
 }
 
-func (tl *TailedList) AddToEnd(val string) {
+func (tl *TailedList) AddAtEnd(val string) {
 
 	n := &Node{val, nil}
 
