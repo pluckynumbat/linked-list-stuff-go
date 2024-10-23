@@ -59,3 +59,16 @@ func (tl *TailedList) AddAtEnd(val string) {
 	tl.tail = n
 }
 
+func (tl *TailedList) AddAtBeginning(val string) {
+
+	n := &Node{val, nil}
+
+	if tl.IsEmpty() {
+		tl.head = n
+		tl.tail = n
+		return
+	}
+
+	n.next = tl.head
+	tl.head = n
+}
