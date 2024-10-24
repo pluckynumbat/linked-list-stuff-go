@@ -163,7 +163,7 @@ func TestAddAtBeginningOnANonEmptyList(t *testing.T) {
 	}
 }
 
-func TestRemoveValOnEmptyList(t *testing.T) {
+func TestRemoveValueOnEmptyList(t *testing.T) {
 	tl := &TailedList{}
 
 	err := tl.RemoveValue("a")
