@@ -1,5 +1,7 @@
 package tlistlib
 
+import "fmt"
+
 type TailedList struct {
 	head, tail *Node
 }
@@ -71,4 +73,52 @@ func (tl *TailedList) AddAtBeginning(val string) {
 
 	n.next = tl.head
 	tl.head = n
+}
+
+func (tl *TailedList) RemoveValue(val string) error {
+
+	notFoundErr := fmt.Errorf("the value %v isn't present in the list", val)
+
+	//no elements in the list
+	if tl.IsEmpty() {
+		return fmt.Errorf("the list is empty")
+	}
+
+	//single element list
+	if tl.head == tl.tail {
+		if val == tl.head.data {
+			tl.head = nil
+			tl.tail = nil
+			return nil
+		} else {
+			return notFoundErr
+		}
+	}
+
+	runner := tl.head
+	var prev *Node
+
+	for runner != nil {
+		if runner.data == val {
+
+			//head has the value
+			if runner == tl.head {
+				tl.head = runner.next
+				return nil
+			}
+
+			prev.next = runner.next
+
+			//tail has the value
+			if runner == tl.tail {
+				tl.tail = prev
+			}
+		}
+
+		prev = runner
+		runner = runner.next
+	}
+
+	return notFoundErr
+
 }
