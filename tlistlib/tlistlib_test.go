@@ -174,3 +174,20 @@ func TestRemoveValOnEmptyList(t *testing.T) {
 	}
 }
 
+func TestRemoveValidValueOnSingleElementList(t *testing.T) {
+	n := &Node{"a", nil}
+	tl := TailedList{n, n}
+
+	err := tl.RemoveValue("a")
+	if err != nil {
+		t.Errorf("Removal failed on: %v", err)
+	} else {
+		want := "nil"
+		got := tl.String()
+
+		if want != got {
+			t.Errorf("Removing a valid value from an empty list failed, want %v, got %v", want, got)
+		}
+	}
+}
+
