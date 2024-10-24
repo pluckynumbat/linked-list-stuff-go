@@ -1,6 +1,7 @@
 package tlistlib
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -161,3 +162,15 @@ func TestAddAtBeginningOnANonEmptyList(t *testing.T) {
 		t.Errorf("New Tail on adding a value at the beginning of a non-empty list fails: want '%s', got '%s'", want, got)
 	}
 }
+
+func TestRemoveValOnEmptyList(t *testing.T) {
+	tl := &TailedList{}
+
+	err := tl.RemoveValue("a")
+	if err == nil {
+		t.Errorf("Removing a value from an empty list should have returned an error")
+	} else {
+		fmt.Println(err)
+	}
+}
+
