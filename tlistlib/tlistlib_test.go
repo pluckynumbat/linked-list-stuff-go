@@ -191,3 +191,14 @@ func TestRemoveValidValueOnSingleElementList(t *testing.T) {
 	}
 }
 
+func TestRemoveInvalidValueOnSingleElementList(t *testing.T) {
+	n := &Node{"a", nil}
+	tl := TailedList{n, n}
+
+	err := tl.RemoveValue("b")
+	if err == nil {
+		t.Errorf("Removing an invalid value from an empty list should have returned an error")
+	} else {
+		fmt.Println(err)
+	}
+}
