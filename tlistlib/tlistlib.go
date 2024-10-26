@@ -122,3 +122,21 @@ func (tl *TailedList) RemoveValue(val string) error {
 	return notFoundErr
 
 }
+
+func (tl *TailedList) RemoveFirst() (*Node, error) {
+
+	if tl.IsEmpty() {
+		return nil, fmt.Errorf("the list is empty")
+	}
+
+	removed := tl.head
+	tl.head = tl.head.next
+
+	//it was a single element list
+	if tl.head == nil {
+		tl.tail = nil
+	}
+
+	return removed, nil
+}
+
