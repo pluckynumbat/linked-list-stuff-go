@@ -202,3 +202,15 @@ func TestRemoveInvalidValueOnSingleElementList(t *testing.T) {
 		fmt.Println(err)
 	}
 }
+
+func TestRemoveFirstOnEmptyList(t *testing.T) {
+	tl := TailedList{}
+
+	_, err := tl.RemoveFirst()
+	if err == nil {
+		t.Errorf("Removing first element from an empty list should have returned an error")
+	} else {
+		fmt.Println(err)
+	}
+}
+
