@@ -235,3 +235,37 @@ func TestRemoveFirstOnSingleElementList(t *testing.T) {
 	}
 }
 
+func TestRemoveFirstOnList(t *testing.T) {
+	tl := TailedList{}
+	tl.AddAtEnd("a")
+	tl.AddAtEnd("b")
+	tl.AddAtEnd("c")
+
+	removed := []string{"a", "b", "c"}
+	partial := []string{"b->c->nil", "c->nil", "nil"}
+
+	for i := 0; !tl.IsEmpty(); i++ {
+		first, err := tl.RemoveFirst()
+		if err != nil {
+			t.Errorf("Removal failed on: %v", err)
+		} else {
+			wantNode := removed[i]
+			gotNode := first.String()
+
+			if wantNode != gotNode {
+				t.Errorf("Element removed from the list is incorrect, want %v, got %v", wantNode, gotNode)
+			}
+
+			wantList := partial[i]
+			gotList := tl.String()
+
+			if wantList != gotList {
+				t.Errorf("Remaining list after removing first element is incorrect, want %v, got %v", wantList, gotList)
+			}
+		}
+	}
+
+	if !tl.IsEmpty() {
+		t.Errorf("The list should be empty after removing the only element in it")
+	}
+}
