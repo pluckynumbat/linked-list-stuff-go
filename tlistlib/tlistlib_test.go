@@ -202,3 +202,70 @@ func TestRemoveInvalidValueOnSingleElementList(t *testing.T) {
 		fmt.Println(err)
 	}
 }
+
+func TestRemoveFirstOnEmptyList(t *testing.T) {
+	tl := TailedList{}
+
+	_, err := tl.RemoveFirst()
+	if err == nil {
+		t.Errorf("Removing first element from an empty list should have returned an error")
+	} else {
+		fmt.Println(err)
+	}
+}
+
+func TestRemoveFirstOnSingleElementList(t *testing.T) {
+	tl := TailedList{}
+	tl.AddAtEnd("a")
+
+	first, err := tl.RemoveFirst()
+	if err != nil {
+		t.Errorf("Removal failed on: %v", err)
+	} else {
+		want := "a"
+		got := first.String()
+
+		if want != got {
+			t.Errorf("Removing a valid value from an empty list failed, want %v, got %v", want, got)
+		}
+	}
+
+	if !tl.IsEmpty() {
+		t.Errorf("The list should be empty after removing the only element in it")
+	}
+}
+
+func TestRemoveFirstOnList(t *testing.T) {
+	tl := TailedList{}
+	tl.AddAtEnd("a")
+	tl.AddAtEnd("b")
+	tl.AddAtEnd("c")
+
+	removed := []string{"a", "b", "c"}
+	partial := []string{"b->c->nil", "c->nil", "nil"}
+
+	for i := 0; !tl.IsEmpty(); i++ {
+		first, err := tl.RemoveFirst()
+		if err != nil {
+			t.Errorf("Removal failed on: %v", err)
+		} else {
+			wantNode := removed[i]
+			gotNode := first.String()
+
+			if wantNode != gotNode {
+				t.Errorf("Element removed from the list is incorrect, want %v, got %v", wantNode, gotNode)
+			}
+
+			wantList := partial[i]
+			gotList := tl.String()
+
+			if wantList != gotList {
+				t.Errorf("Remaining list after removing first element is incorrect, want %v, got %v", wantList, gotList)
+			}
+		}
+	}
+
+	if !tl.IsEmpty() {
+		t.Errorf("The list should be empty after removing the only element in it")
+	}
+}
