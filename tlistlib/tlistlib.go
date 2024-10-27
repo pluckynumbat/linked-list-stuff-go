@@ -140,3 +140,28 @@ func (tl *TailedList) RemoveFirst() (*Node, error) {
 	return removed, nil
 }
 
+func (tl *TailedList) RemoveLast() (*Node, error) {
+
+	if tl.IsEmpty() {
+		return nil, fmt.Errorf("the list is empty")
+	}
+
+	//it is a single element list
+	if tl.tail == tl.head {
+		removed := tl.head
+		tl.head = nil
+		tl.tail = nil
+		return removed, nil
+	}
+
+	runner := tl.head
+	for runner.next != tl.tail {
+		runner = runner.next
+	}
+
+	removed := tl.tail
+	tl.tail = runner
+	tl.tail.next = nil
+
+	return removed, nil
+}
