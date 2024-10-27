@@ -293,7 +293,7 @@ func TestRemoveLastOnSingleElementList(t *testing.T) {
 		got := last.String()
 
 		if want != got {
-			t.Errorf("Removing the first element from a single element list failed, want %v, got %v", want, got)
+			t.Errorf("Removing the last element from a single element list failed, want %v, got %v", want, got)
 		}
 	}
 
