@@ -269,3 +269,14 @@ func TestRemoveFirstOnList(t *testing.T) {
 		t.Errorf("The list should be empty after removing the only element in it")
 	}
 }
+func TestRemoveLastOnEmptyList(t *testing.T) {
+	tl := TailedList{}
+
+	_, err := tl.RemoveLast()
+	if err == nil {
+		t.Errorf("Removing last element from an empty list should have returned an error")
+	} else {
+		fmt.Println(err)
+	}
+}
+
