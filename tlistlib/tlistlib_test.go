@@ -280,3 +280,24 @@ func TestRemoveLastOnEmptyList(t *testing.T) {
 	}
 }
 
+func TestRemoveLastOnSingleElementList(t *testing.T) {
+	n := &Node{"a", nil}
+	tl := constructListFromNode(n)
+
+	last, err := tl.RemoveLast()
+	if err != nil {
+		t.Errorf("Removal failed on: %v", err)
+	} else {
+		want := "a"
+		got := last.String()
+
+		if want != got {
+			t.Errorf("Removing the first element from a single element list failed, want %v, got %v", want, got)
+		}
+	}
+
+	if !tl.IsEmpty() {
+		t.Errorf("The list should be empty after removing the only element in it")
+	}
+}
+
