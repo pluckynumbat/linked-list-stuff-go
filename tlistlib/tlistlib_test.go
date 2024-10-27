@@ -301,3 +301,39 @@ func TestRemoveLastOnSingleElementList(t *testing.T) {
 	}
 }
 
+func TestRemoveLastOnList(t *testing.T) {
+	tl := TailedList{}
+	tl.AddAtBeginning("a")
+	tl.AddAtBeginning("b")
+	tl.AddAtBeginning("c")
+	tl.AddAtBeginning("d")
+	tl.AddAtBeginning("e")
+
+	removed := []string{"a", "b", "c", "d", "e"}
+	partial := []string{"e->d->c->b->nil", "e->d->c->nil", "e->d->nil", "e->nil", "nil"}
+
+	for i := 0; !tl.IsEmpty(); i++ {
+		last, err := tl.RemoveLast()
+		if err != nil {
+			t.Errorf("Removal failed on: %v", err)
+		} else {
+			wantNode := removed[i]
+			gotNode := last.String()
+
+			if wantNode != gotNode {
+				t.Errorf("Element removed from the list is incorrect, want %v, got %v", wantNode, gotNode)
+			}
+
+			wantList := partial[i]
+			gotList := tl.String()
+
+			if wantList != gotList {
+				t.Errorf("Remaining list after removing last element is incorrect, want %v, got %v", wantList, gotList)
+			}
+		}
+	}
+
+	if !tl.IsEmpty() {
+		t.Errorf("The list should be empty after removing the only element in it")
+	}
+}
