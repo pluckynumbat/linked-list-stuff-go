@@ -226,7 +226,7 @@ func TestRemoveFirstOnSingleElementList(t *testing.T) {
 		got := first.String()
 
 		if want != got {
-			t.Errorf("Removing a valid value from an empty list failed, want %v, got %v", want, got)
+			t.Errorf("Removing the first element from a single element list failed, want %v, got %v", want, got)
 		}
 	}
 
@@ -269,6 +269,7 @@ func TestRemoveFirstOnList(t *testing.T) {
 		t.Errorf("The list should be empty after removing the only element in it")
 	}
 }
+
 func TestRemoveLastOnEmptyList(t *testing.T) {
 	tl := TailedList{}
 
