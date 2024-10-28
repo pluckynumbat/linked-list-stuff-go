@@ -338,3 +338,15 @@ func TestRemoveLastOnList(t *testing.T) {
 		t.Errorf("The list should be empty after removing the only element in it")
 	}
 }
+
+func TestReverseEmptyList(t *testing.T) {
+	tl := &TailedList{}
+
+	err := tl.Reverse()
+	if err == nil {
+		t.Errorf("Attempt to reverse an empty list should have failed")
+	} else {
+		fmt.Println(err)	
+	}
+}
+
