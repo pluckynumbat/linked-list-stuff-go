@@ -409,3 +409,42 @@ func TestReverseList(t *testing.T) {
 		}
 	}
 }
+
+func TestReverseListTillEmpty(t *testing.T) {
+	tl := &TailedList{}
+	tl.AddAtEnd("a")
+	tl.AddAtEnd("b")
+	tl.AddAtEnd("c")
+	tl.AddAtEnd("d")
+	tl.AddAtEnd("e")
+
+	partials := []string{"e->d->c->b->a->nil", "a->b->c->d->nil", "d->c->b->nil", "b->c->nil", "c->nil"}
+	heads := []string{"e", "a", "d", "b", "c"}
+	tails := []string{"a", "d", "b", "c", "c"}
+
+	for i := 0; !tl.IsEmpty(); i++ {
+		err := tl.Reverse()
+		if err != nil {
+			t.Fatalf("Reverse failed on: %v", err)
+		} else {
+			want := partials[i]
+			got := tl.String()
+			if want != got {
+				t.Errorf("Reversing a tailed list failed, want %v, got %v", want, got)
+			}
+
+			want = heads[i]
+			got = tl.head.String()
+			if want != got {
+				t.Errorf("New head after reversing a single element list is incorrect, want %v, got %v", want, got)
+			}
+
+			want = tails[i]
+			got = tl.tail.String()
+			if want != got {
+				t.Errorf("New tail after reversing a single element list is incorrect, want %v, got %v", want, got)
+			}
+		}
+		tl.RemoveFirst()
+	}
+}
