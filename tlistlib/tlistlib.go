@@ -180,7 +180,7 @@ func (tl *TailedList) Reverse() error {
 		runner.next = prev
 		prev = runner
 		runner = nxt
-	} 
+	}
 
 	tl.head, tl.tail = tl.tail, tl.head
 	return nil

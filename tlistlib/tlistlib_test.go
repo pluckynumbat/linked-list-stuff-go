@@ -346,7 +346,7 @@ func TestReverseEmptyList(t *testing.T) {
 	if err == nil {
 		t.Errorf("Attempt to reverse an empty list should have failed")
 	} else {
-		fmt.Println(err)	
+		fmt.Println(err)
 	}
 }
 
