@@ -165,3 +165,23 @@ func (tl *TailedList) RemoveLast() (*Node, error) {
 
 	return removed, nil
 }
+
+func (tl *TailedList) Reverse() error {
+
+	if tl.IsEmpty() {
+		return fmt.Errorf("the list is empty")
+	}
+
+	runner := tl.head
+	var prev, nxt *Node
+
+	for runner != nil {
+		nxt = runner.next
+		runner.next = prev
+		prev = runner
+		runner = nxt
+	}
+
+	tl.head, tl.tail = tl.tail, tl.head
+	return nil
+}
