@@ -350,3 +350,31 @@ func TestReverseEmptyList(t *testing.T) {
 	}
 }
 
+func TestReverseSingleElementList(t *testing.T) {
+	tl := &TailedList{}
+	tl.AddAtBeginning("a")
+
+	err := tl.Reverse()
+	if err != nil {
+		t.Errorf("Reverse failed on: %v", err)
+	} else {
+		want := "a->nil"
+		got := tl.String()
+		if want != got {
+			t.Errorf("Reversing a single element list failed, want %v, got %v", want, got)
+		}
+
+		want = "a"
+		got = tl.head.String()
+		if want != got {
+			t.Errorf("New head after reversing a single element list is incorrect, want %v, got %v", want, got)
+		}
+
+		want = "a"
+		got = tl.tail.String()
+		if want != got {
+			t.Errorf("New tail after reversing a single element list is incorrect, want %v, got %v", want, got)
+		}
+	}
+}
+
