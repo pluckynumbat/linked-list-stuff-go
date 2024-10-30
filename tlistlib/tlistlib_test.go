@@ -491,3 +491,33 @@ func TestCopySingleElementList(t *testing.T) {
 	}
 }
 
+func TestCopyList(t *testing.T) {
+	tl := &TailedList{}
+	data := []string{"a", "b", "c", "d", "e"}
+	partials := []string{"a->nil", "a->b->nil", "a->b->c->nil", "a->b->c->d->nil", "a->b->c->d->e->nil"}
+	heads := []string{"a", "a", "a", "a", "a"}
+	tails := []string{"a", "b", "c", "d", "e"}
+
+	for i := 0; i < len(data); i++ {
+		tl.AddAtEnd(data[i])
+		tl2 := tl.Copy()
+
+		want := partials[i]
+		got := tl2.String()
+		if want != got {
+			t.Errorf("Copying a list failed, want %v, got %v", want, got)
+		}
+
+		want = heads[i]
+		got = tl.head.String()
+		if want != got {
+			t.Errorf("New head after copying a list is incorrect, want %v, got %v", want, got)
+		}
+
+		want = tails[i]
+		got = tl.tail.String()
+		if want != got {
+			t.Errorf("New tail after copying a list is incorrect, want %v, got %v", want, got)
+		}
+	}
+}
