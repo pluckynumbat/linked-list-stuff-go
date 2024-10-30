@@ -461,3 +461,33 @@ func TestCopyEmptyList(t *testing.T) {
 	}
 }
 
+func TestCopySingleElementList(t *testing.T) {
+	tl := constructListFromNode(&Node{"a", nil})
+	tl2 := tl.Copy()
+
+	want := "a->nil"
+	got := tl2.String()
+
+	if want != got {
+		t.Errorf("Copying a single element tailed list failed, want %v, got %v", want, got)
+	}
+
+	want = "a"
+	got = tl2.head.String()
+
+	if want != got {
+		t.Errorf("Head after copying a single element tailed list is incorrect, want %v, got %v", want, got)
+	}
+
+	want = "a"
+	got = tl2.tail.String()
+
+	if want != got {
+		t.Errorf("Tail after copying a single element tailed list is incorrect, want %v, got %v", want, got)
+	}
+
+	if tl2.head != tl2.tail {
+		t.Errorf("Head and Tail of a single element list should be the same node")
+	}
+}
+
