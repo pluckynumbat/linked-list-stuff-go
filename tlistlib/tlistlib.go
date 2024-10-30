@@ -185,3 +185,19 @@ func (tl *TailedList) Reverse() error {
 	tl.head, tl.tail = tl.tail, tl.head
 	return nil
 }
+
+func (tl *TailedList) Copy() *TailedList {
+
+	tlCopy := &TailedList{}
+	if tl.IsEmpty() {
+		return tlCopy
+	}
+
+	runner := tl.head
+	for runner != nil {
+		tlCopy.AddAtEnd(runner.data)
+		runner = runner.next
+	}
+
+	return tlCopy
+}
