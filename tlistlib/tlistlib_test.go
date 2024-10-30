@@ -448,3 +448,16 @@ func TestReverseListTillEmpty(t *testing.T) {
 		tl.RemoveFirst()
 	}
 }
+
+func TestCopyEmptyList(t *testing.T) {
+	tl := &TailedList{}
+	tl2 := tl.Copy()
+
+	want := "nil"
+	got := tl2.String()
+
+	if want != got {
+		t.Errorf("Copying an empty tailed list failed, want %v, got %v", want, got)
+	}
+}
+
