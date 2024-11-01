@@ -5,7 +5,7 @@ import (
 )
 
 func TestNilNodeString(t *testing.T) {
-	var node *Node 
+	var node *Node
 	got := node.String()
 	want := "nil"
 
@@ -26,7 +26,7 @@ func TestNodeString(t *testing.T) {
 }
 
 func TestNilListString(t *testing.T) {
-	var dlist *DoublyLinkedList 
+	var dlist *DoublyLinkedList
 
 	got := dlist.String()
 	want := "nil"

@@ -1,9 +1,9 @@
 package dlistlib
+
 type Node struct {
 	prev *Node
 	data string
 	next *Node
-
 }
 
 func (n *Node) String() string {
@@ -37,4 +37,3 @@ func (dl *DoublyLinkedList) String() string {
 
 	return str
 }
-
