@@ -47,3 +47,19 @@ func TestSingleElementListString(t *testing.T) {
 	}
 }
 
+func TestListString(t *testing.T) {
+	var head, tail *Node
+	head = &Node{nil, "a", nil}
+	tail = &Node{nil, "b", nil}
+
+	head.next = tail
+	tail.prev = head
+
+	dlist := &DoublyLinkedList{head, tail}
+	got := dlist.String()
+	want := "nil<-a<=>b->nil"
+
+	if got != want {
+		t.Errorf("Incorrect string for a single element list: want %v, got %v", want, got)
+	}
+}
