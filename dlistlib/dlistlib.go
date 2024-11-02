@@ -37,3 +37,11 @@ func (dl *DoublyLinkedList) String() string {
 
 	return str
 }
+
+func (dl *DoublyLinkedList) IsNil() bool {
+	return dl == nil
+}
+
+func (dl *DoublyLinkedList) IsEmpty() bool {
+	return dl.head == nil
+}
