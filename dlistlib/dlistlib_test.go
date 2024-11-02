@@ -12,7 +12,6 @@ func TestNilNodeString(t *testing.T) {
 	if got != want {
 		t.Errorf("Incorrect string for a nil node: want %v, got %v", want, got)
 	}
-
 }
 
 func TestNodeString(t *testing.T) {
@@ -63,3 +62,33 @@ func TestListString(t *testing.T) {
 		t.Errorf("Incorrect string for a single element list: want %v, got %v", want, got)
 	}
 }
+
+func TestIsNil(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	want := true
+	got := dlist.IsNil()
+
+	if got != want {
+		t.Errorf("Incorrect value of IsNil on nil list: want %v, got %v", want, got)
+	}
+
+	dlist = &DoublyLinkedList{}
+
+	want = false
+	got = dlist.IsNil()
+
+	if got != want {
+		t.Errorf("Incorrect value of IsNil on a non nil list: want %v, got %v", want, got)
+	}
+
+	dlist = new(DoublyLinkedList)
+
+	want = false
+	got = dlist.IsNil()
+
+	if got != want {
+		t.Errorf("Incorrect value of IsNil on a non nil list: want %v, got %v", want, got)
+	}
+}
+
