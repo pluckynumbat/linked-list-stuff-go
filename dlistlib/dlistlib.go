@@ -19,8 +19,12 @@ type DoublyLinkedList struct {
 }
 
 func (dl *DoublyLinkedList) String() string {
-	if dl == nil || dl.head == nil {
+	if dl.IsNil() {
 		return "nil"
+	}
+
+	if dl.IsEmpty() {
+		return "empty"
 	}
 
 	str := "nil<-"
@@ -36,4 +40,12 @@ func (dl *DoublyLinkedList) String() string {
 	str += "->nil"
 
 	return str
+}
+
+func (dl *DoublyLinkedList) IsNil() bool {
+	return dl == nil
+}
+
+func (dl *DoublyLinkedList) IsEmpty() bool {
+	return dl.head == nil
 }
