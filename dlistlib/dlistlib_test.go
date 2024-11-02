@@ -92,3 +92,47 @@ func TestIsNil(t *testing.T) {
 	}
 }
 
+func TestIsEmptyTrue(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	dlist = &DoublyLinkedList{}
+
+	want := true
+	got := dlist.IsEmpty()
+
+	if got != want {
+		t.Errorf("Incorrect value of IsEmpty on an empty list: want %v, got %v", want, got)
+	}
+
+	dlist = new(DoublyLinkedList)
+
+	want = true
+	got = dlist.IsEmpty()
+
+	if got != want {
+		t.Errorf("Incorrect value of IsEmpty on an empty list: want %v, got %v", want, got)
+	}
+}
+
+func TestIsEmptyFalse(t *testing.T) {
+	node := &Node{nil, "a", nil}
+	dlist := &DoublyLinkedList{node, node}
+
+	want := false
+	got := dlist.IsEmpty()
+
+	if got != want {
+		t.Errorf("Incorrect value of IsEmpty on a non empty list: want %v, got %v", want, got)
+	}
+
+	dlist = new(DoublyLinkedList)
+	dlist.head = node
+	dlist.tail = node
+
+	want = false
+	got = dlist.IsEmpty()
+
+	if got != want {
+		t.Errorf("Incorrect value of IsEmpty on a non empty list: want %v, got %v", want, got)
+	}
+}
