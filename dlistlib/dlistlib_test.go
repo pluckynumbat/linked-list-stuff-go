@@ -1,6 +1,7 @@
 package dlistlib
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -17,7 +18,7 @@ func TestNilNodeString(t *testing.T) {
 func TestNodeString(t *testing.T) {
 	node := &Node{nil, "a", nil}
 	got := node.String()
-	want := "<-a->"
+	want := "a"
 
 	if got != want {
 		t.Errorf("Incorrect string for a non-nil node: want %v, got %v", want, got)
@@ -134,5 +135,89 @@ func TestIsEmptyFalse(t *testing.T) {
 
 	if got != want {
 		t.Errorf("Incorrect value of IsEmpty on a non empty list: want %v, got %v", want, got)
+	}
+}
+
+func TestAddAtBeginningNilList(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	err := dlist.AddAtBeginning("a")
+	if err == nil {
+		t.Errorf("Adding to a nil list should have failed")
+	} else {
+		fmt.Println(err)
+	}
+}
+
+func TestAddAtBeginningEmptyList(t *testing.T) {
+	dlist := &DoublyLinkedList{}
+
+	err := dlist.AddAtBeginning("a")
+
+	if err != nil {
+		t.Errorf("Adding to an empty list failed, error: %v", err)
+	} else {
+
+		want := "nil<-a->nil"
+		got := dlist.String()
+
+		if got != want {
+			t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+		}
+
+		want = "a"
+		got = dlist.head.String()
+		if got != want {
+			t.Errorf("Head after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+		}
+
+		got = dlist.tail.String()
+		if got != want {
+			t.Errorf("Tail after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+		}
+	}
+}
+
+func TestAddAtBeginningList(t *testing.T) {
+
+	vals := []string{"a", "b", "c", "d", "e"}
+	partials := []string{
+		"nil<-a->nil",
+		"nil<-b<=>a->nil",
+		"nil<-c<=>b<=>a->nil",
+		"nil<-d<=>c<=>b<=>a->nil",
+		"nil<-e<=>d<=>c<=>b<=>a->nil",
+	}
+	heads := []string{"a", "b", "c", "d", "e"}
+	tail := "a"
+
+	dlist := &DoublyLinkedList{}
+
+	for i, v := range vals {
+		err := dlist.AddAtBeginning(v)
+
+		if err != nil {
+			t.Errorf("Adding to a list failed, error: %v", err)
+		} else {
+
+			want := partials[i]
+			got := dlist.String()
+
+			if got != want {
+				t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+			}
+
+			want = heads[i]
+			got = dlist.head.String()
+			if got != want {
+				t.Errorf("Head after adding to an empty list is incorrect, want: %v, got:{{ .Var }} %v", want, got)
+			}
+
+			want = tail
+			got = dlist.tail.String()
+			if got != want {
+				t.Errorf("Tail after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+			}
+		}
 	}
 }
