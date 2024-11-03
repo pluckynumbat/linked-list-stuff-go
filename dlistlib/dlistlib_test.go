@@ -28,7 +28,7 @@ func TestNodeString(t *testing.T) {
 	})
 }
 
-func TestInvalidListString(t *testing.T) {
+func TestListString(t *testing.T) {
 
 	var dlist *DoublyLinkedList
 
@@ -50,34 +50,33 @@ func TestInvalidListString(t *testing.T) {
 			t.Errorf("Incorrect string for an empty list: want %v, got %v", want, got)
 		}
 	})
-}
 
-func TestSingleElementListString(t *testing.T) {
 	node := &Node{nil, "a", nil}
-	dlist := &DoublyLinkedList{node, node}
-	got := dlist.String()
-	want := "nil<-a->nil"
+	dlist = &DoublyLinkedList{node, node}
+	t.Run("Single Element List String", func(t *testing.T) {
+		got := dlist.String()
+		want := "nil<-a->nil"
 
-	if got != want {
-		t.Errorf("Incorrect string for a single element list: want %v, got %v", want, got)
-	}
-}
+		if got != want {
+			t.Errorf("Incorrect string for a single element list: want %v, got %v", want, got)
+		}
+	})
 
-func TestListString(t *testing.T) {
 	var head, tail *Node
 	head = &Node{nil, "a", nil}
 	tail = &Node{nil, "b", nil}
 
 	head.next = tail
 	tail.prev = head
+	dlist = &DoublyLinkedList{head, tail}
+	t.Run("Two Element List String", func(t *testing.T) {
+		got := dlist.String()
+		want := "nil<-a<=>b->nil"
 
-	dlist := &DoublyLinkedList{head, tail}
-	got := dlist.String()
-	want := "nil<-a<=>b->nil"
-
-	if got != want {
-		t.Errorf("Incorrect string for a single element list: want %v, got %v", want, got)
-	}
+		if got != want {
+			t.Errorf("Incorrect string for a 2 element list: want %v, got %v", want, got)
+		}
+	})
 }
 
 func TestIsNil(t *testing.T) {
