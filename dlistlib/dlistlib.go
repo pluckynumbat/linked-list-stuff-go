@@ -16,7 +16,7 @@ func (n *Node) String() string {
 	if n == nil {
 		return "nil"
 	}
-	return "<-" + n.data + "->"
+	return n.data
 }
 
 type DoublyLinkedList struct {

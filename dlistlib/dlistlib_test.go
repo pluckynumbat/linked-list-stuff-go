@@ -17,7 +17,7 @@ func TestNilNodeString(t *testing.T) {
 func TestNodeString(t *testing.T) {
 	node := &Node{nil, "a", nil}
 	got := node.String()
-	want := "<-a->"
+	want := "a"
 
 	if got != want {
 		t.Errorf("Incorrect string for a non-nil node: want %v, got %v", want, got)
