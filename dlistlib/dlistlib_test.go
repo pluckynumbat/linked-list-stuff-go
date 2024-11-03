@@ -148,3 +148,32 @@ func TestAddAtBeginningNilList(t *testing.T) {
 	}
 }
 
+func TestAddAtBeginningEmptyList(t *testing.T) {
+	dlist := &DoublyLinkedList{}
+
+	err := dlist.AddAtBeginning("a")
+
+	if err != nil {
+		t.Errorf("Adding to an empty list failed, error: %v", err)
+	} else {
+		
+		want := "nil<-a->nil"
+		got := dlist.String()
+
+		if got != want {
+			t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+		}
+
+		want = "a"
+		got = dlist.head.String()
+		if got != want {
+			t.Errorf("Head after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+		}
+
+		got = dlist.tail.String()
+		if got != want {
+			t.Errorf("Tail after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+		}
+	}
+}
+
