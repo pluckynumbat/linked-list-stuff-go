@@ -28,15 +28,28 @@ func TestNodeString(t *testing.T) {
 	})
 }
 
-func TestNilListString(t *testing.T) {
+func TestInvalidListString(t *testing.T) {
+
 	var dlist *DoublyLinkedList
 
-	got := dlist.String()
-	want := "nil"
+	t.Run("Nil List String", func(t *testing.T) {
+		got := dlist.String()
+		want := "nil"
 
-	if got != want {
-		t.Errorf("Incorrect string for a nil list: want %v, got %v", want, got)
-	}
+		if got != want {
+			t.Errorf("Incorrect string for a nil list: want %v, got %v", want, got)
+		}
+	})
+
+	dlist = &DoublyLinkedList{}
+	t.Run("Empty List String", func(t *testing.T) {
+		got := dlist.String()
+		want := "empty"
+
+		if got != want {
+			t.Errorf("Incorrect string for an empty list: want %v, got %v", want, got)
+		}
+	})
 }
 
 func TestSingleElementListString(t *testing.T) {
