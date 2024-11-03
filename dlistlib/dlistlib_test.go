@@ -5,24 +5,27 @@ import (
 	"testing"
 )
 
-func TestNilNodeString(t *testing.T) {
-	var node *Node
-	got := node.String()
-	want := "nil"
-
-	if got != want {
-		t.Errorf("Incorrect string for a nil node: want %v, got %v", want, got)
-	}
-}
-
 func TestNodeString(t *testing.T) {
-	node := &Node{nil, "a", nil}
-	got := node.String()
-	want := "a"
 
-	if got != want {
-		t.Errorf("Incorrect string for a non-nil node: want %v, got %v", want, got)
-	}
+	var node *Node
+	t.Run("Nil Node String", func(t *testing.T) {
+		got := node.String()
+		want := "nil"
+
+		if got != want {
+			t.Errorf("Incorrect string for Node: want %v, got %v", want, got)
+		}
+	})
+
+	node = &Node{nil, "a", nil}
+	t.Run("Non-nil Node String", func(t *testing.T) {
+		got := node.String()
+		want := "a"
+
+		if got != want {
+			t.Errorf("Incorrect string for Node: want %v, got %v", want, got)
+		}
+	})
 }
 
 func TestNilListString(t *testing.T) {
