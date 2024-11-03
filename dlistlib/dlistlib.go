@@ -1,5 +1,11 @@
 package dlistlib
 
+import (
+	"fmt"
+)
+
+const NilListError string = "The list is nil"
+
 type Node struct {
 	prev *Node
 	data string
@@ -48,4 +54,22 @@ func (dl *DoublyLinkedList) IsNil() bool {
 
 func (dl *DoublyLinkedList) IsEmpty() bool {
 	return dl.head == nil
+}
+
+func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
+	
+	if dl.IsNil() {
+		return fmt.Errorf(NilListError)
+	}
+	node := &Node{nil, val, nil}
+	if dl.IsEmpty() {
+		dl.head = node
+		dl.tail = node
+		return nil
+	}
+
+	node.next = dl.head
+	dl.head.prev = node
+	dl.head = node
+	return nil
 }
