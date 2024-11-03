@@ -1,6 +1,7 @@
 package dlistlib
 
 import (
+	"fmt"
 	"testing"
 )
 
@@ -156,7 +157,7 @@ func TestAddAtBeginningEmptyList(t *testing.T) {
 	if err != nil {
 		t.Errorf("Adding to an empty list failed, error: %v", err)
 	} else {
-		
+
 		want := "nil<-a->nil"
 		got := dlist.String()
 
@@ -178,7 +179,7 @@ func TestAddAtBeginningEmptyList(t *testing.T) {
 }
 
 func TestAddAtBeginningList(t *testing.T) {
-	
+
 	vals := []string{"a", "b", "c", "d", "e"}
 	partials := []string{
 		"nil<-a->nil",
@@ -190,7 +191,6 @@ func TestAddAtBeginningList(t *testing.T) {
 	heads := []string{"a", "b", "c", "d", "e"}
 	tail := "a"
 
-
 	dlist := &DoublyLinkedList{}
 
 	for i, v := range vals {
@@ -199,7 +199,7 @@ func TestAddAtBeginningList(t *testing.T) {
 		if err != nil {
 			t.Errorf("Adding to a list failed, error: %v", err)
 		} else {
-			
+
 			want := partials[i]
 			got := dlist.String()
 

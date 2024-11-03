@@ -57,7 +57,7 @@ func (dl *DoublyLinkedList) IsEmpty() bool {
 }
 
 func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
-	
+
 	if dl.IsNil() {
 		return fmt.Errorf(NilListError)
 	}
