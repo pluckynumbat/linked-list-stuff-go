@@ -136,3 +136,15 @@ func TestIsEmptyFalse(t *testing.T) {
 		t.Errorf("Incorrect value of IsEmpty on a non empty list: want %v, got %v", want, got)
 	}
 }
+
+func TestAddAtBeginningNilList(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	err := dlist.AddAtBeginning("a")
+	if err == nil {
+		t.Errorf("Adding to a nil list should have failed")
+	} else {
+		fmt.Println(err)
+	}
+}
+
