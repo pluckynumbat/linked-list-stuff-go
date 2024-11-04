@@ -16,37 +16,35 @@ func TestNodeString(t *testing.T) {
 	}
 }
 
-func TestSingleElementTailedListString(t *testing.T) {
+func TestSingleElementTailedListStrings(t *testing.T) {
 	tl := constructListFromNode(&Node{"a", nil})
 
-	want := "a->nil"
-	got := tl.String()
+	t.Run("Single Element Tailed List String", func(t *testing.T) {
+		want := "a->nil"
+		got := tl.String()
 
-	if got != want {
-		t.Errorf("*TailedListString.String() on a single element tailed list is incorrect: want '%s', got '%s'", want, got)
-	}
-}
+		if got != want {
+			t.Errorf("*TailedListString.String() on a single element tailed list is incorrect: want '%s', got '%s'", want, got)
+		}
+	})
 
-func TestSingleElementTailedListHead(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
+	t.Run("Single Element Tailed List Head", func(t *testing.T) {
+		want := "a"
+		got := tl.head.String()
 
-	want := "a"
-	got := tl.head.String()
+		if got != want {
+			t.Errorf("Head of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
+		}
+	})
 
-	if got != want {
-		t.Errorf("Head of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
-	}
-}
+	t.Run("Single Element Tailed List Tail", func(t *testing.T) {
+		want := "a"
+		got := tl.tail.String()
 
-func TestSingleElementTailedListTail(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
-
-	want := "a"
-	got := tl.tail.String()
-
-	if got != want {
-		t.Errorf("Tail of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
-	}
+		if got != want {
+			t.Errorf("Tail of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
+		}
+	})
 }
 
 func TestIsEmptyTrue(t *testing.T) {
