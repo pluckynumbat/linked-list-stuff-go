@@ -72,50 +72,52 @@ func TestIsEmpty(t *testing.T) {
 	})
 }
 
-func TestAddAtEndOnAnEmptyList(t *testing.T) {
+func TestAddAtEnd(t *testing.T) {
 	tl := &TailedList{}
+
 	tl.AddAtEnd("a")
+	t.Run("Add At End Empty List", func(t *testing.T) {
 
-	want := "a->nil"
-	got := tl.String()
-	if got != want {
-		t.Errorf("Adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
-	}
+		want := "a->nil"
+		got := tl.String()
+		if got != want {
+			t.Errorf("Adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "a"
-	got = tl.head.String()
-	if got != want {
-		t.Errorf("New Head on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "a"
+		got = tl.head.String()
+		if got != want {
+			t.Errorf("New Head on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "a"
-	got = tl.tail.String()
-	if got != want {
-		t.Errorf("New Tail on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
-	}
-}
+		want = "a"
+		got = tl.tail.String()
+		if got != want {
+			t.Errorf("New Tail on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
+		}
+	})
 
-func TestAddAtEndOnANonEmptyList(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
 	tl.AddAtEnd("b")
+	t.Run("Add At End Non-Empty List", func(t *testing.T) {
 
-	want := "a->b->nil"
-	got := tl.String()
-	if got != want {
-		t.Errorf("Adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want := "a->b->nil"
+		got := tl.String()
+		if got != want {
+			t.Errorf("Adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "a"
-	got = tl.head.String()
-	if got != want {
-		t.Errorf("New Head on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "a"
+		got = tl.head.String()
+		if got != want {
+			t.Errorf("New Head on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "b"
-	got = tl.tail.String()
-	if got != want {
-		t.Errorf("New Tail on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "b"
+		got = tl.tail.String()
+		if got != want {
+			t.Errorf("New Tail on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
+	})
 }
 
 func TestAddAtBeginningOnAnEmptyList(t *testing.T) {
