@@ -82,30 +82,36 @@ func TestListString(t *testing.T) {
 func TestIsNil(t *testing.T) {
 	var dlist *DoublyLinkedList
 
-	want := true
-	got := dlist.IsNil()
+	t.Run("Is Nil True", func(t *testing.T) {
+		want := true
+		got := dlist.IsNil()
 
-	if got != want {
-		t.Errorf("Incorrect value of IsNil on nil list: want %v, got %v", want, got)
-	}
+		if got != want {
+			t.Errorf("Incorrect value of IsNil on nil list: want %v, got %v", want, got)
+		}
+	})
 
 	dlist = &DoublyLinkedList{}
 
-	want = false
-	got = dlist.IsNil()
+	t.Run("Is Nil False Struct Literal", func(t *testing.T) {
+		want := false
+		got := dlist.IsNil()
 
-	if got != want {
-		t.Errorf("Incorrect value of IsNil on a non nil list: want %v, got %v", want, got)
-	}
+		if got != want {
+			t.Errorf("Incorrect value of IsNil on a non nil list: want %v, got %v", want, got)
+		}
+	})
 
 	dlist = new(DoublyLinkedList)
 
-	want = false
-	got = dlist.IsNil()
+	t.Run("Is Nil False New Allocator", func(t *testing.T) {
+		want := false
+		got := dlist.IsNil()
 
-	if got != want {
-		t.Errorf("Incorrect value of IsNil on a non nil list: want %v, got %v", want, got)
-	}
+		if got != want {
+			t.Errorf("Incorrect value of IsNil on a non nil list: want %v, got %v", want, got)
+		}
+	})
 }
 
 func TestIsEmptyTrue(t *testing.T) {
