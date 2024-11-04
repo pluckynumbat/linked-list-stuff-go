@@ -16,151 +16,154 @@ func TestNodeString(t *testing.T) {
 	}
 }
 
-func TestSingleElementTailedListString(t *testing.T) {
+func TestSingleElementTailedListStrings(t *testing.T) {
 	tl := constructListFromNode(&Node{"a", nil})
 
-	want := "a->nil"
-	got := tl.String()
+	t.Run("Single Element Tailed List String", func(t *testing.T) {
+		want := "a->nil"
+		got := tl.String()
 
-	if got != want {
-		t.Errorf("*TailedListString.String() on a single element tailed list is incorrect: want '%s', got '%s'", want, got)
-	}
+		if got != want {
+			t.Errorf("*TailedListString.String() on a single element tailed list is incorrect: want '%s', got '%s'", want, got)
+		}
+	})
+
+	t.Run("Single Element Tailed List Head", func(t *testing.T) {
+		want := "a"
+		got := tl.head.String()
+
+		if got != want {
+			t.Errorf("Head of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
+		}
+	})
+
+	t.Run("Single Element Tailed List Tail", func(t *testing.T) {
+		want := "a"
+		got := tl.tail.String()
+
+		if got != want {
+			t.Errorf("Tail of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
+		}
+	})
 }
 
-func TestSingleElementTailedListHead(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
+func TestIsEmpty(t *testing.T) {
+	tl := TailedList{}
 
-	want := "a"
-	got := tl.head.String()
+	t.Run("Is Empty True", func(t *testing.T) {
 
-	if got != want {
-		t.Errorf("Head of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
-	}
+		want := true
+		got := tl.IsEmpty()
+
+		if got != want {
+			t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
+		}
+	})
+
+	tl = constructListFromNode(&Node{"a", nil})
+	t.Run("Is Empty False", func(t *testing.T) {
+
+		want := false
+		got := tl.IsEmpty()
+
+		if got != want {
+			t.Errorf("Is Empty on a non-empty list failed: want '%v', got '%v'", want, got)
+		}
+	})
 }
 
-func TestSingleElementTailedListTail(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
-
-	want := "a"
-	got := tl.tail.String()
-
-	if got != want {
-		t.Errorf("Tail of the single element tailed list is incorrect: want '%s', got '%s'", want, got)
-	}
-}
-
-func TestIsEmptyTrue(t *testing.T) {
+func TestAddAtEnd(t *testing.T) {
 	tl := &TailedList{}
 
-	want := true
-	got := tl.IsEmpty()
-
-	if got != want {
-		t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
-	}
-}
-
-func TestIsEmptyFalse(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
-
-	want := false
-	got := tl.IsEmpty()
-
-	if got != want {
-		t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
-	}
-}
-
-func TestAddAtEndOnAnEmptyList(t *testing.T) {
-	tl := &TailedList{}
 	tl.AddAtEnd("a")
+	t.Run("Add At End Empty List", func(t *testing.T) {
 
-	want := "a->nil"
-	got := tl.String()
-	if got != want {
-		t.Errorf("Adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
-	}
+		want := "a->nil"
+		got := tl.String()
+		if got != want {
+			t.Errorf("Adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "a"
-	got = tl.head.String()
-	if got != want {
-		t.Errorf("New Head on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "a"
+		got = tl.head.String()
+		if got != want {
+			t.Errorf("New Head on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "a"
-	got = tl.tail.String()
-	if got != want {
-		t.Errorf("New Tail on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
-	}
-}
+		want = "a"
+		got = tl.tail.String()
+		if got != want {
+			t.Errorf("New Tail on adding a value at the end of an empty list fails: want '%s', got '%s'", want, got)
+		}
+	})
 
-func TestAddAtEndOnANonEmptyList(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
 	tl.AddAtEnd("b")
+	t.Run("Add At End Non-Empty List", func(t *testing.T) {
 
-	want := "a->b->nil"
-	got := tl.String()
-	if got != want {
-		t.Errorf("Adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want := "a->b->nil"
+		got := tl.String()
+		if got != want {
+			t.Errorf("Adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "a"
-	got = tl.head.String()
-	if got != want {
-		t.Errorf("New Head on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "a"
+		got = tl.head.String()
+		if got != want {
+			t.Errorf("New Head on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "b"
-	got = tl.tail.String()
-	if got != want {
-		t.Errorf("New Tail on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "b"
+		got = tl.tail.String()
+		if got != want {
+			t.Errorf("New Tail on adding a value at the end of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
+	})
 }
 
-func TestAddAtBeginningOnAnEmptyList(t *testing.T) {
+func TestAddAtBeginning(t *testing.T) {
 	tl := &TailedList{}
+
 	tl.AddAtBeginning("a")
+	t.Run("Add At Beginning Empty List", func(t *testing.T) {
+		want := "a->nil"
+		got := tl.String()
+		if got != want {
+			t.Errorf("Adding a value at the beginning of an empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want := "a->nil"
-	got := tl.String()
-	if got != want {
-		t.Errorf("Adding a value at the beginning of an empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "a"
+		got = tl.head.String()
+		if got != want {
+			t.Errorf("New Head on adding a value at the beginning of an empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "a"
-	got = tl.head.String()
-	if got != want {
-		t.Errorf("New Head on adding a value at the beginning of an empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "a"
+		got = tl.tail.String()
+		if got != want {
+			t.Errorf("New Tail on adding a value at the beginning of an empty list fails: want '%s', got '%s'", want, got)
+		}
+	})
 
-	want = "a"
-	got = tl.tail.String()
-	if got != want {
-		t.Errorf("New Tail on adding a value at the beginning of an empty list fails: want '%s', got '%s'", want, got)
-	}
-}
-
-func TestAddAtBeginningOnANonEmptyList(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
 	tl.AddAtBeginning("b")
+	t.Run("Add At Beginning Non-Empty List", func(t *testing.T) {
+		want := "b->a->nil"
+		got := tl.String()
+		if got != want {
+			t.Errorf("Adding a value at the beginning of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want := "b->a->nil"
-	got := tl.String()
-	if got != want {
-		t.Errorf("Adding a value at the beginning of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "b"
+		got = tl.head.String()
+		if got != want {
+			t.Errorf("New Head on adding a value at the beginning of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
 
-	want = "b"
-	got = tl.head.String()
-	if got != want {
-		t.Errorf("New Head on adding a value at the beginning of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
-
-	want = "a"
-	got = tl.tail.String()
-	if got != want {
-		t.Errorf("New Tail on adding a value at the beginning of a non-empty list fails: want '%s', got '%s'", want, got)
-	}
+		want = "a"
+		got = tl.tail.String()
+		if got != want {
+			t.Errorf("New Tail on adding a value at the beginning of a non-empty list fails: want '%s', got '%s'", want, got)
+		}
+	})
 }
 
 func TestRemoveValueOnEmptyList(t *testing.T) {
