@@ -47,7 +47,7 @@ func TestSingleElementTailedListStrings(t *testing.T) {
 	})
 }
 
-func TestIsEmptyTrue(t *testing.T) {
+func TestIsEmpty(t *testing.T) {
 	tl := TailedList{}
 
 	t.Run("Is Empty True", func(t *testing.T) {
