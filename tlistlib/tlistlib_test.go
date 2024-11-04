@@ -48,25 +48,28 @@ func TestSingleElementTailedListStrings(t *testing.T) {
 }
 
 func TestIsEmptyTrue(t *testing.T) {
-	tl := &TailedList{}
+	tl := TailedList{}
 
-	want := true
-	got := tl.IsEmpty()
+	t.Run("Is Empty True", func(t *testing.T) {
 
-	if got != want {
-		t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
-	}
-}
+		want := true
+		got := tl.IsEmpty()
 
-func TestIsEmptyFalse(t *testing.T) {
-	tl := constructListFromNode(&Node{"a", nil})
+		if got != want {
+			t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
+		}
+	})
 
-	want := false
-	got := tl.IsEmpty()
+	tl = constructListFromNode(&Node{"a", nil})
+	t.Run("Is Empty False", func(t *testing.T) {
 
-	if got != want {
-		t.Errorf("Is Empty on an empty list failed: want '%v', got '%v'", want, got)
-	}
+		want := false
+		got := tl.IsEmpty()
+
+		if got != want {
+			t.Errorf("Is Empty on a non-empty list failed: want '%v', got '%v'", want, got)
+		}
+	})
 }
 
 func TestAddAtEndOnAnEmptyList(t *testing.T) {
