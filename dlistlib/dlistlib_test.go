@@ -237,13 +237,95 @@ func TestAddAtBeginningList(t *testing.T) {
 			want = heads[i]
 			got = dlist.head.String()
 			if got != want {
-				t.Errorf("Head after adding to an empty list is incorrect, want: %v, got:{{ .Var }} %v", want, got)
+				t.Errorf("Head after adding to a list is incorrect, want: %v, got: %v", want, got)
 			}
 
 			want = tail
 			got = dlist.tail.String()
 			if got != want {
-				t.Errorf("Tail after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+				t.Errorf("Tail after adding to a list is incorrect, want: %v, got: %v", want, got)
+			}
+		}
+	}
+}
+
+func TestAddAtEndNilList(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	err := dlist.AddAtEnd("a")
+	if err == nil {
+		t.Errorf("Adding to a nil list should have failed")
+	} else {
+		fmt.Println(err)
+	}
+}
+
+func TestAddAtEndEmptyList(t *testing.T) {
+	dlist := &DoublyLinkedList{}
+
+	err := dlist.AddAtEnd("a")
+	if err != nil {
+		t.Errorf("Adding to an empty list failed, error: %v", err)
+	} else {
+
+		want := "nil<-a->nil"
+		got := dlist.String()
+		if got != want {
+			t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+		}
+
+		want = "a"
+		got = dlist.head.String()
+		if got != want {
+			t.Errorf("Head after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+		}
+
+		got = dlist.tail.String()
+		if got != want {
+			t.Errorf("Tail after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+		}
+	}
+}
+
+func TestAddAtEndList(t *testing.T) {
+
+	vals := []string{"a", "b", "c", "d", "e"}
+	partials := []string{
+		"nil<-a->nil",
+		"nil<-a<=>b->nil",
+		"nil<-a<=>b<=>c->nil",
+		"nil<-a<=>b<=>c<=>d->nil",
+		"nil<-a<=>b<=>c<=>d<=>e->nil",
+	}
+	head := "a"
+	tails := []string{"a", "b", "c", "d", "e"}
+
+	dlist := &DoublyLinkedList{}
+
+	for i, v := range vals {
+		err := dlist.AddAtEnd(v)
+
+		if err != nil {
+			t.Errorf("Adding to a list failed, error: %v", err)
+		} else {
+
+			want := partials[i]
+			got := dlist.String()
+
+			if got != want {
+				t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+			}
+
+			want = head
+			got = dlist.head.String()
+			if got != want {
+				t.Errorf("Head after adding to a list is incorrect, want: %v, got: %v", want, got)
+			}
+
+			want = tails[i]
+			got = dlist.tail.String()
+			if got != want {
+				t.Errorf("Tail after adding to a list is incorrect, want: %v, got: %v", want, got)
 			}
 		}
 	}
