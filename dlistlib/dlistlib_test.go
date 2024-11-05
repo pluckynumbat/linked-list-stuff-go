@@ -247,42 +247,43 @@ func TestAddAtBeginning(t *testing.T) {
 	})
 }
 
-func TestAddAtEndNilList(t *testing.T) {
+func TestAddAtEnd(t *testing.T) {
 	var dlist *DoublyLinkedList
 
-	err := dlist.AddAtEnd("a")
-	if err == nil {
-		t.Errorf("Adding to a nil list should have failed")
-	} else {
-		fmt.Println(err)
-	}
-}
-
-func TestAddAtEndEmptyList(t *testing.T) {
-	dlist := &DoublyLinkedList{}
-
-	err := dlist.AddAtEnd("a")
-	if err != nil {
-		t.Errorf("Adding to an empty list failed, error: %v", err)
-	} else {
-
-		want := "nil<-a->nil"
-		got := dlist.String()
-		if got != want {
-			t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+	t.Run("Nil List", func(t *testing.T) {
+		err := dlist.AddAtEnd("a")
+		if err == nil {
+			t.Errorf("Adding to a nil list should have failed")
+		} else {
+			fmt.Println(err)
 		}
+	})
 
-		want = "a"
-		got = dlist.head.String()
-		if got != want {
-			t.Errorf("Head after adding to an empty list is incorrect, want: %v, got: %v", want, got)
-		}
+	dlist = &DoublyLinkedList{}
+	t.Run("Empty List", func(t *testing.T) {
+		err := dlist.AddAtEnd("a")
+		if err != nil {
+			t.Errorf("Adding to an empty list failed, error: %v", err)
+		} else {
 
-		got = dlist.tail.String()
-		if got != want {
-			t.Errorf("Tail after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+			want := "nil<-a->nil"
+			got := dlist.String()
+			if got != want {
+				t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+			}
+
+			want = "a"
+			got = dlist.head.String()
+			if got != want {
+				t.Errorf("Head after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+			}
+
+			got = dlist.tail.String()
+			if got != want {
+				t.Errorf("Tail after adding to an empty list is incorrect, want: %v, got: %v", want, got)
+			}
 		}
-	}
+	})
 }
 
 func TestAddAtEndList(t *testing.T) {
