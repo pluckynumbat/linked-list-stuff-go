@@ -284,48 +284,46 @@ func TestAddAtEnd(t *testing.T) {
 			}
 		}
 	})
-}
 
-func TestAddAtEndList(t *testing.T) {
+	dlist = &DoublyLinkedList{}
+	t.Run("General Add At End", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
+		partials := []string{
+			"nil<-a->nil",
+			"nil<-a<=>b->nil",
+			"nil<-a<=>b<=>c->nil",
+			"nil<-a<=>b<=>c<=>d->nil",
+			"nil<-a<=>b<=>c<=>d<=>e->nil",
+		}
+		head := "a"
+		tails := []string{"a", "b", "c", "d", "e"}
 
-	vals := []string{"a", "b", "c", "d", "e"}
-	partials := []string{
-		"nil<-a->nil",
-		"nil<-a<=>b->nil",
-		"nil<-a<=>b<=>c->nil",
-		"nil<-a<=>b<=>c<=>d->nil",
-		"nil<-a<=>b<=>c<=>d<=>e->nil",
-	}
-	head := "a"
-	tails := []string{"a", "b", "c", "d", "e"}
+		for i, v := range vals {
+			err := dlist.AddAtEnd(v)
 
-	dlist := &DoublyLinkedList{}
+			if err != nil {
+				t.Errorf("Adding to a list failed, error: %v", err)
+			} else {
 
-	for i, v := range vals {
-		err := dlist.AddAtEnd(v)
+				want := partials[i]
+				got := dlist.String()
 
-		if err != nil {
-			t.Errorf("Adding to a list failed, error: %v", err)
-		} else {
+				if got != want {
+					t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+				}
 
-			want := partials[i]
-			got := dlist.String()
+				want = head
+				got = dlist.head.String()
+				if got != want {
+					t.Errorf("Head after adding to a list is incorrect, want: %v, got: %v", want, got)
+				}
 
-			if got != want {
-				t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
-			}
-
-			want = head
-			got = dlist.head.String()
-			if got != want {
-				t.Errorf("Head after adding to a list is incorrect, want: %v, got: %v", want, got)
-			}
-
-			want = tails[i]
-			got = dlist.tail.String()
-			if got != want {
-				t.Errorf("Tail after adding to a list is incorrect, want: %v, got: %v", want, got)
+				want = tails[i]
+				got = dlist.tail.String()
+				if got != want {
+					t.Errorf("Tail after adding to a list is incorrect, want: %v, got: %v", want, got)
+				}
 			}
 		}
-	}
+	})
 }
