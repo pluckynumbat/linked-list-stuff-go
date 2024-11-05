@@ -203,50 +203,48 @@ func TestAddAtBeginning(t *testing.T) {
 			}
 		}
 	})
-}
 
-func TestAddAtBeginningList(t *testing.T) {
+	dlist = &DoublyLinkedList{}
+	t.Run("General Add At Beginning", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
+		partials := []string{
+			"nil<-a->nil",
+			"nil<-b<=>a->nil",
+			"nil<-c<=>b<=>a->nil",
+			"nil<-d<=>c<=>b<=>a->nil",
+			"nil<-e<=>d<=>c<=>b<=>a->nil",
+		}
+		heads := []string{"a", "b", "c", "d", "e"}
+		tail := "a"
 
-	vals := []string{"a", "b", "c", "d", "e"}
-	partials := []string{
-		"nil<-a->nil",
-		"nil<-b<=>a->nil",
-		"nil<-c<=>b<=>a->nil",
-		"nil<-d<=>c<=>b<=>a->nil",
-		"nil<-e<=>d<=>c<=>b<=>a->nil",
-	}
-	heads := []string{"a", "b", "c", "d", "e"}
-	tail := "a"
+		for i, v := range vals {
+			err := dlist.AddAtBeginning(v)
 
-	dlist := &DoublyLinkedList{}
+			if err != nil {
+				t.Errorf("Adding to a list failed, error: %v", err)
+			} else {
 
-	for i, v := range vals {
-		err := dlist.AddAtBeginning(v)
+				want := partials[i]
+				got := dlist.String()
 
-		if err != nil {
-			t.Errorf("Adding to a list failed, error: %v", err)
-		} else {
+				if got != want {
+					t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
+				}
 
-			want := partials[i]
-			got := dlist.String()
+				want = heads[i]
+				got = dlist.head.String()
+				if got != want {
+					t.Errorf("Head after adding to a list is incorrect, want: %v, got: %v", want, got)
+				}
 
-			if got != want {
-				t.Errorf("List after adding to it is incorrect, want: %v, got: %v", want, got)
-			}
-
-			want = heads[i]
-			got = dlist.head.String()
-			if got != want {
-				t.Errorf("Head after adding to a list is incorrect, want: %v, got: %v", want, got)
-			}
-
-			want = tail
-			got = dlist.tail.String()
-			if got != want {
-				t.Errorf("Tail after adding to a list is incorrect, want: %v, got: %v", want, got)
+				want = tail
+				got = dlist.tail.String()
+				if got != want {
+					t.Errorf("Tail after adding to a list is incorrect, want: %v, got: %v", want, got)
+				}
 			}
 		}
-	}
+	})
 }
 
 func TestAddAtEndNilList(t *testing.T) {
