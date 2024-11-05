@@ -73,3 +73,22 @@ func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
 	dl.head = node
 	return nil
 }
+
+func (dl *DoublyLinkedList) AddAtEnd(val string) error {
+
+	if dl.IsNil() {
+		return fmt.Errorf(NilListError)
+	}
+	node := &Node{nil, val, nil}
+
+	if dl.IsEmpty() {
+		dl.head = node
+		dl.tail = node
+		return nil
+	}
+
+	node.prev = dl.tail
+	dl.tail.next = node
+	dl.tail = node
+	return nil
+}
