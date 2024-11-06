@@ -117,6 +117,9 @@ func (dl *DoublyLinkedList) Reverse() error {
 }
 
 func (dl *DoublyLinkedList) Copy() (*DoublyLinkedList, error) {
+	if dl.IsNil() {
+		return nil, fmt.Errorf(NilListError)
+	}
 
 	dlcopy := &DoublyLinkedList{}
 	if dl.IsEmpty() {
