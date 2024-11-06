@@ -92,3 +92,26 @@ func (dl *DoublyLinkedList) AddAtEnd(val string) error {
 	dl.tail = node
 	return nil
 }
+
+func (dl *DoublyLinkedList) Reverse() error {
+	if dl.IsNil() {
+		return fmt.Errorf(NilListError)
+	}
+
+	if dl.IsEmpty() {
+		return nil
+	}
+
+	runner := dl.head
+	var nxt *Node
+
+	for runner != nil {
+
+		nxt = runner.next
+		runner.next, runner.prev = runner.prev, runner.next
+		runner = nxt
+	}
+
+	dl.head, dl.tail = dl.tail, dl.head
+	return nil
+}
