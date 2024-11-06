@@ -115,3 +115,22 @@ func (dl *DoublyLinkedList) Reverse() error {
 	dl.head, dl.tail = dl.tail, dl.head
 	return nil
 }
+
+func (dl *DoublyLinkedList) Copy() (*DoublyLinkedList, error) {
+	if dl.IsNil() {
+		return nil, fmt.Errorf(NilListError)
+	}
+
+	dlcopy := &DoublyLinkedList{}
+	if dl.IsEmpty() {
+		return dlcopy, nil
+	}
+
+	runner := dl.head
+
+	for runner != nil {
+		dlcopy.AddAtEnd(runner.data)
+		runner = runner.next
+	}
+	return dlcopy, nil
+}
