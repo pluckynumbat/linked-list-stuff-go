@@ -327,3 +327,16 @@ func TestAddAtEnd(t *testing.T) {
 		}
 	})
 }
+
+func TestCopy(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	t.Run("Nil list", func(t *testing.T) {
+		_, err := dlist.Copy()
+		if err == nil {
+			(t.Errorf("Copying a nil list should have failed"))
+		} else {
+			fmt.Println(err)
+		}
+	})
+}
