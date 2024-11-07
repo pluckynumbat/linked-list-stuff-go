@@ -346,7 +346,6 @@ func TestCopy(t *testing.T) {
 		if err != nil {
 			t.Errorf("Copying an empty list failed, error: %v", err)
 		} else {
-			
 			want := "empty"
 			got := dlistCopy.String()
 			if want != got {
