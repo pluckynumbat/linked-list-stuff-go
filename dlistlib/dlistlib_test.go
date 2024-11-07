@@ -365,7 +365,19 @@ func TestCopy(t *testing.T) {
 			want := "nil<-a->nil"
 			got := dlistCopy.String()
 			if want != got {
-				t.Errorf("Copying an empty list returned incorrect results, want: %v, got %v", want, got)
+				t.Errorf("Copying a single element list returned incorrect results, want: %v, got %v", want, got)
+			}
+
+			want = "a"
+			got = dlistCopy.head.String()
+			if want != got {
+				t.Errorf("Head of the copied single element list is incorrect, want: %v, got %v", want, got)
+			}
+
+			want = "a"
+			got = dlistCopy.tail.String()
+			if want != got {
+				t.Errorf("Tail of the copied single element list is incorrect, want: %v, got %v", want, got)
 			}
 		}
 	})
