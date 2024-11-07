@@ -339,4 +339,21 @@ func TestCopy(t *testing.T) {
 			fmt.Println(err)
 		}
 	})
+
+	dlist = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		dlistCopy, err := dlist.Copy()
+		if err != nil {
+			t.Errorf("Adding to an empty list failed, error: %v", err)
+		} else {
+			
+			want := "empty"
+			got := dlistCopy.String()
+			if want != got {
+				t.Errorf("Copying an empty list returned incorrect results, want: %v, got %v", want, got)
+			}
+		}
+	})
+
+
 }
