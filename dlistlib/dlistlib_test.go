@@ -327,3 +327,78 @@ func TestAddAtEnd(t *testing.T) {
 		}
 	})
 }
+
+func TestCopy(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	t.Run("Nil list", func(t *testing.T) {
+		_, err := dlist.Copy()
+		if err == nil {
+			(t.Errorf("Copying a nil list should have failed"))
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	dlist = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		dlistCopy, err := dlist.Copy()
+		if err != nil {
+			t.Errorf("Copying an empty list failed, error: %v", err)
+		} else {
+			want := "empty"
+			got := dlistCopy.String()
+			if want != got {
+				t.Errorf("Copying an empty list returned incorrect results, want: %v, got %v", want, got)
+			}
+		}
+	})
+
+	t.Run("General Copy", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
+		partials := []string{
+			"nil<-a->nil",
+			"nil<-a<=>b->nil",
+			"nil<-a<=>b<=>c->nil",
+			"nil<-a<=>b<=>c<=>d->nil",
+			"nil<-a<=>b<=>c<=>d<=>e->nil",
+		}
+		head := "a"
+		tails := []string{"a", "b", "c", "d", "e"}
+
+		for i, v := range vals {
+			err := dlist.AddAtEnd(v)
+
+			if err != nil {
+				t.Errorf("Adding to a list failed, error: %v", err)
+			} else {
+
+				dlistCopy, err2 := dlist.Copy()
+
+				if err2 != nil {
+					t.Errorf("Copying a list failed, error: %v", err)
+				} else {
+
+					want := partials[i]
+					got := dlistCopy.String()
+
+					if got != want {
+						t.Errorf("Copying a list returned incorrect results, want: %v, got: %v", want, got)
+					}
+
+					want = head
+					got = dlistCopy.head.String()
+					if got != want {
+						t.Errorf("Head of the copied list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					want = tails[i]
+					got = dlistCopy.tail.String()
+					if got != want {
+						t.Errorf("Tail of the copied list is incorrect, want: %v, got: %v", want, got)
+					}
+				}
+			}
+		}
+	})
+}
