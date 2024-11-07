@@ -344,7 +344,7 @@ func TestCopy(t *testing.T) {
 	t.Run("Empty list", func(t *testing.T) {
 		dlistCopy, err := dlist.Copy()
 		if err != nil {
-			t.Errorf("Adding to an empty list failed, error: %v", err)
+			t.Errorf("Copying an empty list failed, error: %v", err)
 		} else {
 			
 			want := "empty"
@@ -355,5 +355,18 @@ func TestCopy(t *testing.T) {
 		}
 	})
 
-
+	dlist.AddAtEnd("a")
+	t.Run("Single Element list", func(t *testing.T) {
+		dlistCopy, err := dlist.Copy()
+		if err != nil {
+			t.Errorf("Copying a single element list failed, error: %v", err)
+		} else {
+			
+			want := "nil<-a->nil"
+			got := dlistCopy.String()
+			if want != got {
+				t.Errorf("Copying an empty list returned incorrect results, want: %v, got %v", want, got)
+			}
+		}
+	})
 }
