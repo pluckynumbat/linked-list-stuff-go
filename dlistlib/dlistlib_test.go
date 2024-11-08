@@ -414,4 +414,18 @@ func TestReverse(t *testing.T) {
 			fmt.Println(err)
 		}
 	})
+
+	dlist = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		err := dlist.Reverse()
+		if err != nil {
+			t.Errorf("Reversing an empty list failed, error: %v", err)
+		} else {
+			want := "empty"
+			got := dlist.String()
+			if want != got {
+				t.Errorf("Reversing an empty list returned incorrect results, want: %v, got %v", want, got)
+			}
+		}
+	})
 }
