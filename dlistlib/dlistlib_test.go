@@ -428,4 +428,52 @@ func TestReverse(t *testing.T) {
 			}
 		}
 	})
+
+	t.Run("General Reverse", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
+		partials := []string{
+			"nil<-a->nil",
+			"nil<-b<=>a->nil",
+			"nil<-c<=>a<=>b->nil",
+			"nil<-d<=>b<=>a<=>c->nil",
+			"nil<-e<=>c<=>a<=>b<=>d->nil",
+		}
+		heads := []string{"a", "b", "c", "d", "e"}
+		tails := []string{"a", "a", "b", "c", "d"}
+
+		for i, v := range vals {
+			err := dlist.AddAtEnd(v)
+
+			if err != nil {
+				t.Errorf("Adding to a list failed, error: %v", err)
+			} else {
+
+				err2 := dlist.Reverse()
+
+				if err2 != nil {
+					t.Errorf("Reversing a list failed, error: %v", err)
+				} else {
+
+					want := partials[i]
+					got := dlist.String()
+
+					if got != want {
+						t.Errorf("Reversing a list returned incorrect results, want: %v, got: %v", want, got)
+					}
+
+					want = heads[i]
+					got = dlist.head.String()
+					if got != want {
+						t.Errorf("Head of the reversed list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					want = tails[i]
+					got = dlist.tail.String()
+					if got != want {
+						t.Errorf("Tail of the reversed list is incorrect, want: %v, got: %v", want, got)
+					}
+				}
+			}
+		}
+	})
 }
