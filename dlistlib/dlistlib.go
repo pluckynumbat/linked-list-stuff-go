@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-const NilListError string = "The list is nil"
+var NilListError error = fmt.Errorf("The list is nil")
 
 type Node struct {
 	prev *Node
@@ -59,7 +59,7 @@ func (dl *DoublyLinkedList) IsEmpty() bool {
 func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
 
 	if dl.IsNil() {
-		return fmt.Errorf(NilListError)
+		return NilListError
 	}
 	node := &Node{nil, val, nil}
 	if dl.IsEmpty() {
@@ -77,7 +77,7 @@ func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
 func (dl *DoublyLinkedList) AddAtEnd(val string) error {
 
 	if dl.IsNil() {
-		return fmt.Errorf(NilListError)
+		return NilListError
 	}
 	node := &Node{nil, val, nil}
 
@@ -95,7 +95,7 @@ func (dl *DoublyLinkedList) AddAtEnd(val string) error {
 
 func (dl *DoublyLinkedList) Reverse() error {
 	if dl.IsNil() {
-		return fmt.Errorf(NilListError)
+		return NilListError
 	}
 
 	if dl.IsEmpty() {
@@ -118,7 +118,7 @@ func (dl *DoublyLinkedList) Reverse() error {
 
 func (dl *DoublyLinkedList) Copy() (*DoublyLinkedList, error) {
 	if dl.IsNil() {
-		return nil, fmt.Errorf(NilListError)
+		return nil, NilListError
 	}
 
 	dlcopy := &DoublyLinkedList{}
