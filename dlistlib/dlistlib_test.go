@@ -402,3 +402,16 @@ func TestCopy(t *testing.T) {
 		}
 	})
 }
+
+func TestReverse(t *testing.T) {
+	var dlist *DoublyLinkedList
+
+	t.Run("Nil list", func(t *testing.T) {
+		_, err := dlist.Copy()
+		if err == nil {
+			(t.Errorf("Reversing a nil list should have failed"))
+		} else {
+			fmt.Println(err)
+		}
+	})
+}
