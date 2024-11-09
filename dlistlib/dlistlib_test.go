@@ -488,3 +488,13 @@ func TestRemoveValueNilList(t *testing.T) {
 	}
 }
 
+func TestRemoveValueEmptyList(t *testing.T) {
+	dl := &DoublyLinkedList{}
+	err := dl.RemoveValue("a")
+	if err == nil {
+		t.Errorf("Removing a value from an empty list should have failed")
+	} else {
+		fmt.Println(err)
+	}
+}
+
