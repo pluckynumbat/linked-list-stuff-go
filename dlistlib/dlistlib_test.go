@@ -478,127 +478,128 @@ func TestReverse(t *testing.T) {
 	})
 }
 
-func TestRemoveValueNilList(t *testing.T) {
+func TestRemoveValue(t *testing.T) {
 	var dl *DoublyLinkedList
-	err := dl.RemoveValue("a")
-	if err == nil {
-		t.Errorf("Removing a value from a nil list should have failed")
-	} else {
-		fmt.Println(err)
-	}
-}
 
-func TestRemoveValueEmptyList(t *testing.T) {
-	dl := &DoublyLinkedList{}
-	err := dl.RemoveValue("a")
-	if err == nil {
-		t.Errorf("Removing a value from an empty list should have failed")
-	} else {
-		fmt.Println(err)
-	}
-}
+	t.Run("Nil list", func(t *testing.T) {
+		err := dl.RemoveValue("a")
+		if err == nil {
+			t.Errorf("Removing a value from a nil list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
 
-func TestRemoveInvalidValueSingleElementList(t *testing.T) {
-	dl := &DoublyLinkedList{}
-	err := dl.AddAtEnd("b")
-	if err != nil {
-		t.Errorf("Adding to a list failed, error: %v", err)
-	} else {
-		err2 := dl.RemoveValue("a")
+	dl = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		err := dl.RemoveValue("a")
+		if err == nil {
+			t.Errorf("Removing a value from an empty list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Invalid Value, Single Element list", func(t *testing.T) {
+		err := dl.AddAtEnd("b")
+		if err != nil {
+			t.Errorf("Adding to a list failed, error: %v", err)
+		} else {
+			err2 := dl.RemoveValue("a")
+			if err2 == nil {
+				t.Errorf("Removing an invalid value from a single element list failed should have failed")
+			} else {
+				fmt.Println(err2)
+			}
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Valid Value, Single Element list", func(t *testing.T) {
+		err := dl.AddAtEnd("a")
+		if err != nil {
+			t.Errorf("Adding to a list failed, error: %v", err)
+		} else {
+			err2 := dl.RemoveValue("a")
+			if err2 != nil {
+				t.Errorf("Removing a value from a single element list failed, error:  %v", err2)
+			} else {
+
+				want := true
+				got := dl.IsEmpty()
+
+				if got != want {
+					t.Errorf("Removing the only value from a single element list should result in an empty list")
+				}
+			}
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Invalid Value, Multi-Element list", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
+
+		for _, v := range vals {
+			err := dl.AddAtEnd(v)
+			if err != nil {
+				t.Fatalf("Adding to a list failed, error: %v", err)
+			}
+		}
+
+		err2 := dl.RemoveValue("f")
 		if err2 == nil {
-			t.Errorf("Removing an invalid value from a single element list failed should have failed")
+			t.Errorf("Removing an invalid value from a list failed should have failed")
 		} else {
 			fmt.Println(err2)
 		}
-	}
-}
+	})
 
-func TestRemoveValidValueSingleElementList(t *testing.T) {
-	dl := &DoublyLinkedList{}
-	err := dl.AddAtEnd("a")
+	dl = &DoublyLinkedList{}
+	t.Run("Remove values till list is empty", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
 
-	if err != nil {
-		t.Errorf("Adding to a list failed, error: %v", err)
-	} else {
-		err2 := dl.RemoveValue("a")
-		if err2 != nil {
-			t.Errorf("Removing a value from a single element list failed, error:  %v", err2)
-		} else {
-
-			want := true
-			got := dl.IsEmpty()
-
-			if got != want {
-				t.Errorf("Removing the only value from a single element list should result in an empty list")
+		for _, v := range vals {
+			err := dl.AddAtEnd(v)
+			if err != nil {
+				t.Fatalf("Adding to a list failed, error: %v", err)
 			}
 		}
-	}
-}
 
-func TestRemoveInvalidValueList(t *testing.T) {
-	dl := &DoublyLinkedList{}
-	vals := []string{"a", "b", "c", "d", "e"}
-
-	for _, v := range vals {
-		err := dl.AddAtEnd(v)
-		if err != nil {
-			t.Fatalf("Adding to a list failed, error: %v", err)
-		}
-	}
-	
-	err2 := dl.RemoveValue("f")
-	if err2 == nil {
-		t.Errorf("Removing an invalid value from a list failed should have failed")
-	} else {
-		fmt.Println(err2)
-	}
-}
-
-func TestRemoveValuesTillListIsEmpty(t *testing.T) {
-	dl := &DoublyLinkedList{}
-	vals := []string{"a", "b", "c", "d", "e"}
-
-	for _, v := range vals {
-		err := dl.AddAtEnd(v)
-		if err != nil {
-			t.Fatalf("Adding to a list failed, error: %v", err)
-		}
-	}
-
-	removes := []string{"c", "b", "e", "a", "d"}
-	partials := []string{
+		removes := []string{"c", "b", "e", "a", "d"}
+		partials := []string{
 			"nil<-a<=>b<=>d<=>e->nil",
 			"nil<-a<=>d<=>e->nil",
 			"nil<-a<=>d->nil",
 			"nil<-d->nil",
 			"empty",
 		}
-	heads := []string{"a", "a", "a", "d", "nil"}
-	tails := []string{"e", "e", "d", "d", "nil"}
-	for i, v := range removes {
-		err := dl.RemoveValue(v)
-		if err != nil {
-			t.Errorf("Removing from a list failed, error: %v", err)
-		} else {
-			want := partials[i]
-			got := dl.String()
+		heads := []string{"a", "a", "a", "d", "nil"}
+		tails := []string{"e", "e", "d", "d", "nil"}
+		for i, v := range removes {
+			err := dl.RemoveValue(v)
+			if err != nil {
+				t.Errorf("Removing from a list failed, error: %v", err)
+			} else {
+				want := partials[i]
+				got := dl.String()
 
-			if got != want {
-				t.Errorf("Incorrect list after removing an element, want: %v, got: %v", want, got)
-			}
+				if got != want {
+					t.Errorf("Incorrect list after removing an element, want: %v, got: %v", want, got)
+				}
 
-			want = heads[i]
-			got = dl.head.String()
-			if got != want {
-				t.Errorf("Incorrect head after removing an element, want: %v, got: %v", want, got)
-			}
+				want = heads[i]
+				got = dl.head.String()
+				if got != want {
+					t.Errorf("Incorrect head after removing an element, want: %v, got: %v", want, got)
+				}
 
-			want = tails[i]
-			got = dl.tail.String()
-			if got != want {
-				t.Errorf("Incorrect tail after removing an element, want: %v, got: %v", want, got)
+				want = tails[i]
+				got = dl.tail.String()
+				if got != want {
+					t.Errorf("Incorrect tail after removing an element, want: %v, got: %v", want, got)
+				}
 			}
 		}
-	}
+	})
 }
-

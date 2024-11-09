@@ -172,7 +172,7 @@ func (dl *DoublyLinkedList) RemoveValue(val string) error {
 				dl.tail = dl.tail.prev
 				dl.tail.next = nil
 				return nil
-			} 
+			}
 
 			//value is elsewhere in the list
 			runner.prev.next = runner.next
