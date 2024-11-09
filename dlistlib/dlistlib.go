@@ -5,6 +5,7 @@ import (
 )
 
 var NilListError error = fmt.Errorf("The list is nil")
+var EmptyListError error = fmt.Errorf("The list is empty")
 
 type Node struct {
 	prev *Node
@@ -133,4 +134,54 @@ func (dl *DoublyLinkedList) Copy() (*DoublyLinkedList, error) {
 		runner = runner.next
 	}
 	return dlcopy, nil
+}
+
+func (dl *DoublyLinkedList) RemoveValue(val string) error {
+	if dl.IsNil() {
+		return NilListError
+	}
+
+	if dl.IsEmpty() {
+		return EmptyListError
+	}
+
+	var notFoundError error = fmt.Errorf("The value: %v is not present in the list", val)
+
+	runner := dl.head
+
+	for runner != nil {
+
+		//value is found
+		if runner.data == val {
+
+			//single element list
+			if runner == dl.head && runner == dl.tail {
+				dl.head, dl.tail = nil, nil
+				return nil
+			}
+
+			//value is at head
+			if runner == dl.head {
+				dl.head = dl.head.next
+				dl.head.prev = nil
+				return nil
+			}
+
+			//value is at tail
+			if runner == dl.tail {
+				dl.tail = dl.tail.prev
+				dl.tail.next = nil
+				return nil
+			} 
+
+			//value is elsewhere in the list
+			runner.prev.next = runner.next
+			runner.next.prev = runner.prev
+			return nil
+		}
+
+		runner = runner.next
+	}
+
+	return notFoundError
 }
