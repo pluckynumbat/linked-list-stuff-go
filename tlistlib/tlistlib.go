@@ -113,6 +113,8 @@ func (tl *TailedList) RemoveValue(val string) error {
 			if runner == tl.tail {
 				tl.tail = prev
 			}
+
+			return nil
 		}
 
 		prev = runner

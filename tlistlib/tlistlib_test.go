@@ -206,6 +206,51 @@ func TestRemoveInvalidValueOnSingleElementList(t *testing.T) {
 	}
 }
 
+func TestRemoveValuesTillListIsEmpty(t *testing.T) {
+	tl := &TailedList{}
+	vals := []string{"a", "b", "c", "d", "e"}
+
+	for _, v := range vals {
+		tl.AddAtEnd(v)
+	}
+
+	removes := []string{"c", "b", "e", "a", "d"}
+	partials := []string{
+		"a->b->d->e->nil",
+		"a->d->e->nil",
+		"a->d->nil",
+		"d->nil",
+		"nil",
+	}
+	heads := []string{"a", "a", "a", "d", ""}
+	tails := []string{"e", "e", "d", "d", ""}
+	for i, v := range removes {
+		err := tl.RemoveValue(v)
+		if err != nil {
+			t.Errorf("Removing from a list failed, error: %v", err)
+		} else {
+			want := partials[i]
+			got := tl.String()
+
+			if got != want {
+				t.Errorf("Incorrect list after removing an element, want: %v, got: %v", want, got)
+			}
+
+			want = heads[i]
+			got = tl.head.String()
+			if got != want {
+				t.Errorf("Incorrect head after removing an element, want: %v, got: %v", want, got)
+			}
+
+			want = tails[i]
+			got = tl.tail.String()
+			if got != want {
+				t.Errorf("Incorrect tail after removing an element, want: %v, got: %v", want, got)
+			}
+		}
+	}
+}
+
 func TestRemoveFirstOnEmptyList(t *testing.T) {
 	tl := TailedList{}
 
