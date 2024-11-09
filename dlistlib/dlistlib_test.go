@@ -513,3 +513,26 @@ func TestRemoveInvalidValueSingleElementList(t *testing.T) {
 	}
 }
 
+func TestRemoveValidValueSingleElementList(t *testing.T) {
+	dl := &DoublyLinkedList{}
+	err := dl.AddAtEnd("a")
+
+	if err != nil {
+		t.Errorf("Adding to a list failed, error: %v", err)
+	} else {
+		err2 := dl.RemoveValue("a")
+		if err2 != nil {
+			t.Errorf("Removing a value from a single element list failed, error:  %v", err2)
+		} else {
+
+			want := true
+			got := dl.IsEmpty()
+
+			if got != want {
+				t.Errorf("Removing the only value from a single element list should result in an empty list")
+			}
+		}
+	}
+}
+
+
