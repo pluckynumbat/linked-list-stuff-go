@@ -535,4 +535,23 @@ func TestRemoveValidValueSingleElementList(t *testing.T) {
 	}
 }
 
+func TestRemoveInvalidValueList(t *testing.T) {
+	dl := &DoublyLinkedList{}
+	vals := []string{"a", "b", "c", "d", "e"}
+
+	for _, v := range vals {
+		err := dl.AddAtEnd(v)
+		if err != nil {
+			t.Fatalf("Adding to a list failed, error: %v", err)
+		}
+	}
+	
+	err2 := dl.RemoveValue("f")
+	if err2 == nil {
+		t.Errorf("Removing an invalid value from a list failed should have failed")
+	} else {
+		fmt.Println(err2)
+	}
+}
+
 
