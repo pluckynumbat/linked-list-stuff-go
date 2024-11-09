@@ -554,4 +554,51 @@ func TestRemoveInvalidValueList(t *testing.T) {
 	}
 }
 
+func TestRemoveValuesTillListIsEmpty(t *testing.T) {
+	dl := &DoublyLinkedList{}
+	vals := []string{"a", "b", "c", "d", "e"}
+
+	for _, v := range vals {
+		err := dl.AddAtEnd(v)
+		if err != nil {
+			t.Fatalf("Adding to a list failed, error: %v", err)
+		}
+	}
+
+	removes := []string{"c", "b", "e", "a", "d"}
+	partials := []string{
+			"nil<-a<=>b<=>d<=>e->nil",
+			"nil<-a<=>d<=>e->nil",
+			"nil<-a<=>d->nil",
+			"nil<-d->nil",
+			"empty",
+		}
+	heads := []string{"a", "a", "a", "d", "nil"}
+	tails := []string{"e", "e", "d", "d", "nil"}
+	for i, v := range removes {
+		err := dl.RemoveValue(v)
+		if err != nil {
+			t.Errorf("Removing from a list failed, error: %v", err)
+		} else {
+			want := partials[i]
+			got := dl.String()
+
+			if got != want {
+				t.Errorf("Incorrect list after removing an element, want: %v, got: %v", want, got)
+			}
+
+			want = heads[i]
+			got = dl.head.String()
+			if got != want {
+				t.Errorf("Incorrect head after removing an element, want: %v, got: %v", want, got)
+			}
+
+			want = tails[i]
+			got = dl.tail.String()
+			if got != want {
+				t.Errorf("Incorrect tail after removing an element, want: %v, got: %v", want, got)
+			}
+		}
+	}
+}
 
