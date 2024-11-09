@@ -477,3 +477,14 @@ func TestReverse(t *testing.T) {
 		}
 	})
 }
+
+func TestRemoveValueNilList(t *testing.T) {
+	var dl *DoublyLinkedList
+	err := dl.RemoveValue("a")
+	if err == nil {
+		t.Errorf("Removing a value from a nil list should have failed")
+	} else {
+		fmt.Println(err)
+	}
+}
+
