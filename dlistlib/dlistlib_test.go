@@ -603,3 +603,107 @@ func TestRemoveValue(t *testing.T) {
 		}
 	})
 }
+
+func TestRemoveFirst(t *testing.T) {
+	var dl *DoublyLinkedList
+
+	t.Run("Nil list", func(t *testing.T) {
+		_, err := dl.RemoveFirst()
+		if err == nil {
+			t.Errorf("Removing the first element of a nil list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		_, err := dl.RemoveFirst()
+		if err == nil {
+			t.Errorf("Removing the first element of an empty list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Single Element list", func(t *testing.T) {
+		err := dl.AddAtEnd("a")
+		if err != nil {
+			t.Errorf("Adding to a list failed, error: %v", err)
+		} else {
+			removed, err2 := dl.RemoveFirst()
+			if err2 != nil {
+				t.Errorf("Removing the first element from a single element list failed, error:  %v", err2)
+			} else {
+
+				want := "a"
+				got := removed.String()
+				if got != want {
+					t.Errorf("Removed element from a list is incorrect, want: %v, got %v", want, got)
+				}
+
+				want = "empty"
+				got = dl.String()
+				if got != want {
+					t.Errorf("Removing the only value from a single element list should result in an empty list")
+				}
+			}
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Remove first till list is empty", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
+
+		for _, v := range vals {
+			err := dl.AddAtEnd(v)
+			if err != nil {
+				t.Fatalf("Adding to a list failed, error: %v", err)
+			}
+		}
+
+		removed := []string{"a", "b", "c", "d", "e"}
+		partials := []string{
+			"nil<-b<=>c<=>d<=>e->nil",
+			"nil<-c<=>d<=>e->nil",
+			"nil<-d<=>e->nil",
+			"nil<-e->nil",
+			"empty",
+		}
+		heads := []string{"b", "c", "d", "e", "nil"}
+		tails := []string{"e", "e", "e", "e", "nil"}
+		for i := 0; !dl.IsEmpty(); i++ {
+			rem, err := dl.RemoveFirst()
+			if err != nil {
+				t.Errorf("Removing from a list failed, error: %v", err)
+			} else {
+				want := removed[i]
+				got := rem.String()
+
+				if got != want {
+					t.Errorf("Removed element from a list is incorrect, want: %v, got %v", want, got)
+				}
+
+				want = partials[i]
+				got = dl.String()
+
+				if got != want {
+					t.Errorf("Incorrect list after removing the first element, want: %v, got: %v", want, got)
+				}
+
+				want = heads[i]
+				got = dl.head.String()
+				if got != want {
+					t.Errorf("Incorrect head after removing the first element, want: %v, got: %v", want, got)
+				}
+
+				want = tails[i]
+				got = dl.tail.String()
+				if got != want {
+					t.Errorf("Incorrect tail after removing the first element, want: %v, got: %v", want, got)
+				}
+			}
+		}
+	})
+}
