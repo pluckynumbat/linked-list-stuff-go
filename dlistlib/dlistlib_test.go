@@ -615,4 +615,14 @@ func TestRemoveFirst(t *testing.T) {
 			fmt.Println(err)
 		}
 	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		_, err := dl.RemoveFirst()
+		if err == nil {
+			t.Errorf("Removing the first element of an empty list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
 }
