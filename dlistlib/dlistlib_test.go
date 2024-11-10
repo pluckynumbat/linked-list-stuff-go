@@ -625,4 +625,30 @@ func TestRemoveFirst(t *testing.T) {
 			fmt.Println(err)
 		}
 	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Single Element list", func(t *testing.T) {
+		err := dl.AddAtEnd("a")
+		if err != nil {
+			t.Errorf("Adding to a list failed, error: %v", err)
+		} else {
+			removed, err2 := dl.RemoveFirst()
+			if err2 != nil {
+				t.Errorf("Removing the first element from a single element list failed, error:  %v", err2)
+			} else {
+
+				want := "a"
+				got := removed.String()
+				if got != want {
+					t.Errorf("Removed element from a list is incorrect, want: %v, got %v", want, got)
+				}
+
+				want = "empty"
+				got = dl.String()
+				if got != want {
+					t.Errorf("Removing the only value from a single element list should result in an empty list")
+				}
+			}
+		}
+	})
 }
