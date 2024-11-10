@@ -603,3 +603,16 @@ func TestRemoveValue(t *testing.T) {
 		}
 	})
 }
+
+func TestRemoveFirst(t *testing.T) {
+	var dl *DoublyLinkedList
+
+	t.Run("Nil list", func(t *testing.T) {
+		_, err := dl.RemoveFirst()
+		if err == nil {
+			t.Errorf("Removing the first element of a nil list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
+}
