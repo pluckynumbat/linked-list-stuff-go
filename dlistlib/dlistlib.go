@@ -185,3 +185,23 @@ func (dl *DoublyLinkedList) RemoveValue(val string) error {
 
 	return notFoundError
 }
+
+func (dl *DoublyLinkedList) RemoveFirst() (*Node, error) {
+	if dl.IsNil() {
+		return nil, NilListError
+	}
+
+	if dl.IsEmpty() {
+		return nil, EmptyListError
+	}
+
+	removed := dl.head
+	dl.head = dl.head.next
+
+	//last element was removed
+	if dl.head == nil {
+		dl.tail = nil
+	}
+
+	return removed, nil
+}
