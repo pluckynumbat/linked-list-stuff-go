@@ -205,3 +205,24 @@ func (dl *DoublyLinkedList) RemoveFirst() (*Node, error) {
 
 	return removed, nil
 }
+
+// Method to remove the last element (tail) of a doubly linked list
+func (dl *DoublyLinkedList) RemoveLast() (*Node, error) {
+	if dl.IsNil() {
+		return nil, NilListError
+	}
+
+	if dl.IsEmpty() {
+		return nil, EmptyListError
+	}
+
+	removed := dl.tail
+	dl.tail = dl.tail.prev
+
+	//only element in the list was removed
+	if dl.tail == nil {
+		dl.head = nil
+	}
+
+	return removed, nil
+}
