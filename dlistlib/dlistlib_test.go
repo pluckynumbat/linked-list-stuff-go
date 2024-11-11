@@ -719,4 +719,14 @@ func TestRemoveLast(t *testing.T) {
 			fmt.Println(err)
 		}
 	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		_, err := dl.RemoveLast()
+		if err == nil {
+			t.Errorf("Removing the last element of an empty list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
 }
