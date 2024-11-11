@@ -707,3 +707,16 @@ func TestRemoveFirst(t *testing.T) {
 		}
 	})
 }
+
+func TestRemoveLast(t *testing.T) {
+	var dl *DoublyLinkedList
+
+	t.Run("Nil list", func(t *testing.T) {
+		_, err := dl.RemoveLast()
+		if err == nil {
+			t.Errorf("Removing the last element of a nil list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
+}
