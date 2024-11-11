@@ -703,6 +703,126 @@ func TestRemoveFirst(t *testing.T) {
 				if got != want {
 					t.Errorf("Incorrect tail after removing the first element, want: %v, got: %v", want, got)
 				}
+
+				if dl.head != nil {
+					want = "nil"
+					got = dl.head.prev.String()
+					if got != want {
+						t.Errorf("head's prev pointer should always be nil, want: %v, got: %v", want, got)
+					}
+				}
+			}
+		}
+	})
+}
+
+func TestRemoveLast(t *testing.T) {
+	var dl *DoublyLinkedList
+
+	t.Run("Nil list", func(t *testing.T) {
+		_, err := dl.RemoveLast()
+		if err == nil {
+			t.Errorf("Removing the last element of a nil list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Empty list", func(t *testing.T) {
+		_, err := dl.RemoveLast()
+		if err == nil {
+			t.Errorf("Removing the last element of an empty list should have failed")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Single Element list", func(t *testing.T) {
+		err := dl.AddAtEnd("a")
+		if err != nil {
+			t.Errorf("Adding to a list failed, error: %v", err)
+		} else {
+			removed, err2 := dl.RemoveLast()
+			if err2 != nil {
+				t.Errorf("Removing the last element from a single element list failed, error:  %v", err2)
+			} else {
+
+				want := "a"
+				got := removed.String()
+				if got != want {
+					t.Errorf("Removed element from a list is incorrect, want: %v, got %v", want, got)
+				}
+
+				want = "empty"
+				got = dl.String()
+				if got != want {
+					t.Errorf("Removing the only value from a single element list should result in an empty list")
+				}
+			}
+		}
+	})
+
+	dl = &DoublyLinkedList{}
+	t.Run("Remove last till list is empty", func(t *testing.T) {
+		vals := []string{"a", "b", "c", "d", "e"}
+
+		for _, v := range vals {
+			err := dl.AddAtEnd(v)
+			if err != nil {
+				t.Fatalf("Adding to a list failed, error: %v", err)
+			}
+		}
+
+		removed := []string{"e", "d", "c", "b", "a"}
+		partials := []string{
+			"nil<-a<=>b<=>c<=>d->nil",
+			"nil<-a<=>b<=>c->nil",
+			"nil<-a<=>b->nil",
+			"nil<-a->nil",
+			"empty",
+		}
+		heads := []string{"a", "a", "a", "a", "nil"}
+		tails := []string{"d", "c", "b", "a", "nil"}
+		for i := 0; !dl.IsEmpty(); i++ {
+			rem, err := dl.RemoveLast()
+			if err != nil {
+				t.Errorf("Removing from a list failed, error: %v", err)
+			} else {
+				want := removed[i]
+				got := rem.String()
+
+				if got != want {
+					t.Errorf("Removed element from a list is incorrect, want: %v, got %v", want, got)
+				}
+
+				want = partials[i]
+				got = dl.String()
+
+				if got != want {
+					t.Errorf("Incorrect list after removing the last element, want: %v, got: %v", want, got)
+				}
+
+				want = heads[i]
+				got = dl.head.String()
+				if got != want {
+					t.Errorf("Incorrect head after removing the last element, want: %v, got: %v", want, got)
+				}
+
+				want = tails[i]
+				got = dl.tail.String()
+				if got != want {
+					t.Errorf("Incorrect tail after removing the last element, want: %v, got: %v", want, got)
+				}
+
+				if dl.tail != nil {
+					want = "nil"
+					got = dl.tail.next.String()
+					if got != want {
+						t.Errorf("tail's next pointer should always be nil, want: %v, got: %v", want, got)
+					}
+				}
 			}
 		}
 	})

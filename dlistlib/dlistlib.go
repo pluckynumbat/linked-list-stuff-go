@@ -186,6 +186,7 @@ func (dl *DoublyLinkedList) RemoveValue(val string) error {
 	return notFoundError
 }
 
+// Method to remove the first element (head) of a doubly linked list
 func (dl *DoublyLinkedList) RemoveFirst() (*Node, error) {
 	if dl.IsNil() {
 		return nil, NilListError
@@ -198,9 +199,32 @@ func (dl *DoublyLinkedList) RemoveFirst() (*Node, error) {
 	removed := dl.head
 	dl.head = dl.head.next
 
-	//last element was removed
-	if dl.head == nil {
+	if dl.head == nil { //only element in the list was removed
 		dl.tail = nil
+	} else {
+		dl.head.prev = nil
+	}
+
+	return removed, nil
+}
+
+// Method to remove the last element (tail) of a doubly linked list
+func (dl *DoublyLinkedList) RemoveLast() (*Node, error) {
+	if dl.IsNil() {
+		return nil, NilListError
+	}
+
+	if dl.IsEmpty() {
+		return nil, EmptyListError
+	}
+
+	removed := dl.tail
+	dl.tail = dl.tail.prev
+
+	if dl.tail == nil { //only element in the list was removed
+		dl.head = nil
+	} else {
+		dl.tail.next = nil
 	}
 
 	return removed, nil
