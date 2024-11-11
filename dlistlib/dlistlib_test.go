@@ -703,6 +703,14 @@ func TestRemoveFirst(t *testing.T) {
 				if got != want {
 					t.Errorf("Incorrect tail after removing the first element, want: %v, got: %v", want, got)
 				}
+
+				if dl.head != nil {
+					want = "nil"
+					got = dl.head.prev.String()
+					if got != want {
+						t.Errorf("head's prev pointer should always be nil, want: %v, got: %v", want, got)
+					}
+				}
 			}
 		}
 	})
