@@ -467,10 +467,26 @@ func TestReverse(t *testing.T) {
 						t.Errorf("Head of the reversed list is incorrect, want: %v, got: %v", want, got)
 					}
 
+					if dlist.head != nil {
+						want = "nil"
+						got = dlist.head.prev.String()
+						if got != want {
+							t.Errorf("head's prev pointer should always be nil, want: %v, got: %v", want, got)
+						}
+					}
+
 					want = tails[i]
 					got = dlist.tail.String()
 					if got != want {
 						t.Errorf("Tail of the reversed list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if dlist.tail != nil {
+						want = "nil"
+						got = dlist.tail.next.String()
+						if got != want {
+							t.Errorf("tail's next pointer should always be nil, want: %v, got: %v", want, got)
+						}
 					}
 				}
 			}
