@@ -13,6 +13,7 @@ type Node struct {
 	next *Node
 }
 
+// Node's implementation of the Stringer interface
 func (n *Node) String() string {
 	if n == nil {
 		return "nil"
@@ -25,6 +26,7 @@ type DoublyLinkedList struct {
 	tail *Node
 }
 
+// Doubly Linked List's implementation of the Stringer interface
 func (dl *DoublyLinkedList) String() string {
 	if dl.IsNil() {
 		return "nil"
@@ -49,14 +51,17 @@ func (dl *DoublyLinkedList) String() string {
 	return str
 }
 
+// Method to check whether a doubly linked list is nil
 func (dl *DoublyLinkedList) IsNil() bool {
 	return dl == nil
 }
 
+// Method to check whether a doubly linked list is empty
 func (dl *DoublyLinkedList) IsEmpty() bool {
 	return dl.head == nil
 }
 
+// Method ao add a new node to the beginning of a doubly linked list
 func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
 
 	if dl.IsNil() {
@@ -75,6 +80,7 @@ func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
 	return nil
 }
 
+// Method to add a new node to the end of a doubly linked list
 func (dl *DoublyLinkedList) AddAtEnd(val string) error {
 
 	if dl.IsNil() {
@@ -94,6 +100,7 @@ func (dl *DoublyLinkedList) AddAtEnd(val string) error {
 	return nil
 }
 
+// Method to reverse a doubly linked list
 func (dl *DoublyLinkedList) Reverse() error {
 	if dl.IsNil() {
 		return NilListError
@@ -117,6 +124,7 @@ func (dl *DoublyLinkedList) Reverse() error {
 	return nil
 }
 
+// Method to copy a doubly linked list
 func (dl *DoublyLinkedList) Copy() (*DoublyLinkedList, error) {
 	if dl.IsNil() {
 		return nil, NilListError
@@ -136,6 +144,7 @@ func (dl *DoublyLinkedList) Copy() (*DoublyLinkedList, error) {
 	return dlcopy, nil
 }
 
+// Method to remove a value from of a doubly linked list if it is present
 func (dl *DoublyLinkedList) RemoveValue(val string) error {
 	if dl.IsNil() {
 		return NilListError
