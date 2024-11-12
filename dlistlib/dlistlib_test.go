@@ -392,10 +392,26 @@ func TestCopy(t *testing.T) {
 						t.Errorf("Head of the copied list is incorrect, want: %v, got: %v", want, got)
 					}
 
+					if dlistCopy.head != nil {
+						want = "nil"
+						got = dlistCopy.head.prev.String()
+						if got != want {
+							t.Errorf("head's prev pointer should always be nil, want: %v, got: %v", want, got)
+						}
+					}
+
 					want = tails[i]
 					got = dlistCopy.tail.String()
 					if got != want {
 						t.Errorf("Tail of the copied list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if dlistCopy.tail != nil {
+						want = "nil"
+						got = dlistCopy.tail.next.String()
+						if got != want {
+							t.Errorf("tail's next pointer should always be nil, want: %v, got: %v", want, got)
+						}
 					}
 				}
 			}
