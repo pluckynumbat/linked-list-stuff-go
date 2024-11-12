@@ -594,10 +594,26 @@ func TestRemoveValue(t *testing.T) {
 					t.Errorf("Incorrect head after removing an element, want: %v, got: %v", want, got)
 				}
 
+				if dl.head != nil {
+					want = "nil"
+					got = dl.head.prev.String()
+					if got != want {
+						t.Errorf("head's prev pointer should always be nil, want: %v, got: %v", want, got)
+					}
+				}
+
 				want = tails[i]
 				got = dl.tail.String()
 				if got != want {
 					t.Errorf("Incorrect tail after removing an element, want: %v, got: %v", want, got)
+				}
+
+				if dl.tail != nil {
+					want = "nil"
+					got = dl.tail.next.String()
+					if got != want {
+						t.Errorf("tail's next pointer should always be nil, want: %v, got: %v", want, got)
+					}
 				}
 			}
 		}
