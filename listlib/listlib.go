@@ -59,6 +59,13 @@ func (list *LinkedList) IsEmpty() bool {
 	return list.head == nil
 }
 
+func (list *LinkedList) Head() *Node {
+	if list.IsNil() {
+		return nil
+	}
+	return list.head
+}
+
 func (list *LinkedList) Copy() LinkedList {
 	if list.IsEmpty() {
 		fmt.Println("Warning, copying an empty list")
