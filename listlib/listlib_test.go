@@ -425,3 +425,14 @@ func TestNodeGetData(t *testing.T) {
 		t.Fatalf("GetData should have returned an error on a nil node")
 	}
 }
+
+func TestIsNilTrue(t *testing.T) {
+	var nilList *LinkedList
+
+	got := nilList.IsNil()
+	want := true
+	if got != want {
+		t.Errorf("IsNil gave incorrect results, want: %v, got: %v", want, got)
+	}
+}
+
