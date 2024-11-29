@@ -449,3 +449,29 @@ func TestIsNil(t *testing.T) {
 		})
 	}
 }
+
+func TestHead(t *testing.T) {
+
+	var nilList *LinkedList
+	testNode := &Node{"a", nil}
+
+	var tests = []struct {
+		name  string
+		input *LinkedList
+		want  *Node
+	}{
+		{"nil list pointer", nilList, nil},
+		{"new allocator empty list", new(LinkedList), nil},
+		{"composite literal empty list", &LinkedList{}, nil},
+		{"composite literal  non-empty list", &LinkedList{testNode}, testNode},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			got := test.input.Head()
+			if got != test.want {
+				t.Errorf("IsNil gave incorrect results, want: %v, got: %v", test.want, got)
+			}
+		})
+	}
+}
