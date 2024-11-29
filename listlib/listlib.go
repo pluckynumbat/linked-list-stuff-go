@@ -51,8 +51,19 @@ func ConstructFromValues(values ...string) LinkedList {
 	return newList
 }
 
+func (list *LinkedList) IsNil() bool {
+	return list == nil
+}
+
 func (list *LinkedList) IsEmpty() bool {
 	return list.head == nil
+}
+
+func (list *LinkedList) Head() *Node {
+	if list.IsNil() {
+		return nil
+	}
+	return list.head
 }
 
 func (list *LinkedList) Copy() LinkedList {
