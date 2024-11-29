@@ -436,3 +436,25 @@ func TestIsNilTrue(t *testing.T) {
 	}
 }
 
+func TestIsNilFalse(t *testing.T) {
+
+	var tests = []struct {
+		name  string
+		input *LinkedList
+	}{
+		{"new allocator empty list", new(LinkedList)},
+		{"composite literal empty list", &LinkedList{}},
+		{"composite literal  non-empty list", &LinkedList{&Node{"a", nil}}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			want := false
+			got := test.input.IsNil()
+			if got != want {
+				t.Errorf("IsNil gave incorrect results, want: %v, got: %v", want, got)
+			}
+		})
+	}
+}
+
