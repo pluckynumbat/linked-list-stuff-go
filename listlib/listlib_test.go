@@ -426,35 +426,26 @@ func TestNodeGetData(t *testing.T) {
 	}
 }
 
-func TestIsNilTrue(t *testing.T) {
+func TestIsNil(t *testing.T) {
 	var nilList *LinkedList
-
-	got := nilList.IsNil()
-	want := true
-	if got != want {
-		t.Errorf("IsNil gave incorrect results, want: %v, got: %v", want, got)
-	}
-}
-
-func TestIsNilFalse(t *testing.T) {
 
 	var tests = []struct {
 		name  string
 		input *LinkedList
+		want  bool
 	}{
-		{"new allocator empty list", new(LinkedList)},
-		{"composite literal empty list", &LinkedList{}},
-		{"composite literal  non-empty list", &LinkedList{&Node{"a", nil}}},
+		{"nil list pointer", nilList, true},
+		{"new allocator empty list", new(LinkedList), false},
+		{"composite literal empty list", &LinkedList{}, false},
+		{"composite literal  non-empty list", &LinkedList{&Node{"a", nil}}, false},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			want := false
 			got := test.input.IsNil()
-			if got != want {
-				t.Errorf("IsNil gave incorrect results, want: %v, got: %v", want, got)
+			if got != test.want {
+				t.Errorf("IsNil gave incorrect results, want: %v, got: %v", test.want, got)
 			}
 		})
 	}
 }
-
