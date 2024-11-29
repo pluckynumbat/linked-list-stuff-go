@@ -51,6 +51,10 @@ func ConstructFromValues(values ...string) LinkedList {
 	return newList
 }
 
+func (list *LinkedList) IsNil() bool {
+	return list == nil
+}
+
 func (list *LinkedList) IsEmpty() bool {
 	return list.head == nil
 }
