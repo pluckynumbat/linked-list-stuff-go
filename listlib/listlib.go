@@ -92,6 +92,11 @@ func (list *LinkedList) AddToEnd(inputData string) {
 
 	node := constructNode(inputData)
 
+	if list.IsEmpty() {
+		list.head = node
+		return
+	}
+
 	runner := list.head
 	for runner.next != nil {
 		runner = runner.next
@@ -102,6 +107,11 @@ func (list *LinkedList) AddToEnd(inputData string) {
 func (list *LinkedList) AddToBeginning(inputData string) {
 
 	node := constructNode(inputData)
+
+	if list.IsEmpty() {
+		list.head = node
+		return
+	}
 
 	node.next = list.head
 	list.head = node
