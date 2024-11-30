@@ -15,7 +15,8 @@ func TestStringForm(t *testing.T) {
 }
 
 func TestAddToEnd(t *testing.T) {
-	list := constructList(constructNode("1"))
+	list := &LinkedList{}
+	list.AddToEnd("1")
 	list.AddToEnd("2")
 	want := "1->2->nil"
 	have := list.GetStringForm()
@@ -25,7 +26,8 @@ func TestAddToEnd(t *testing.T) {
 }
 
 func TestAddToBeginning(t *testing.T) {
-	list := constructList(constructNode("1"))
+	list := &LinkedList{}
+	list.AddToBeginning("1")
 	list.AddToBeginning("2")
 	want := "2->1->nil"
 	have := list.GetStringForm()
