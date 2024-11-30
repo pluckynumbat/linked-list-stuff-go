@@ -455,22 +455,32 @@ func TestIsNil(t *testing.T) {
 func TestHead(t *testing.T) {
 
 	var nilList *LinkedList
-	testNode := &Node{"a", nil}
+
+	oneNodeList := ConstructFromValues("a")
+	twoNodeList := ConstructFromValues("a", "b")
+	threeNodeList := ConstructFromValues("a", "b", "c")
 
 	var tests = []struct {
 		name  string
 		input *LinkedList
-		want  *Node
+		want  string
 	}{
-		{"nil list pointer", nilList, nil},
-		{"new allocator empty list", new(LinkedList), nil},
-		{"composite literal empty list", &LinkedList{}, nil},
-		{"composite literal  non-empty list", &LinkedList{testNode}, testNode},
+		{"nil list pointer", nilList, ""},
+		{"new allocator empty list", new(LinkedList), ""},
+		{"composite literal empty list", &LinkedList{}, ""},
+		{"composite literal single element list", &oneNodeList, "a"},
+		{"composite literal 2 element list", &twoNodeList, "a"},
+		{"composite literal 3 element list", &threeNodeList, "a"},
 	}
 
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			got := test.input.Head()
+			got, err := test.input.Head().GetData()
+			if err != nil {
+				if test.input.Head() != nil { // if the Head is nil, error is expected
+					t.Fatalf("Error while getting data from head of the list, want: %v, got: %v", test.want, got)
+				}
+			}
 			if got != test.want {
 				t.Errorf("IsNil gave incorrect results, want: %v, got: %v", test.want, got)
 			}
