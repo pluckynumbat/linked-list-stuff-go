@@ -482,7 +482,7 @@ func TestHead(t *testing.T) {
 				}
 			}
 			if got != test.want {
-				t.Errorf("IsNil gave incorrect results, want: %v, got: %v", test.want, got)
+				t.Errorf("Head gave incorrect results, want: %v, got: %v", test.want, got)
 			}
 		})
 	}
