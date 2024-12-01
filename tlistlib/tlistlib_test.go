@@ -569,3 +569,29 @@ func TestCopyList(t *testing.T) {
 		}
 	}
 }
+
+func TestIsNil(t *testing.T) {
+	var nilList *TailedList
+	testNode := &Node{"a", nil}
+
+	var tests = []struct {
+		name  string
+		input *TailedList
+		want  bool
+	}{
+		{"nil list pointer", nilList, true},
+		{"new allocator empty list", new(TailedList), false},
+		{"composite literal empty list", &TailedList{}, false},
+		{"composite literal  non-empty list", &TailedList{testNode, testNode}, false},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			got := test.input.IsNil()
+			if got != test.want {
+				t.Errorf("IsNil gave incorrect results, want: %v, got: %v", test.want, got)
+			}
+		})
+	}
+}
+
