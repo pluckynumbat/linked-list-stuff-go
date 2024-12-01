@@ -43,8 +43,26 @@ func constructListFromNode(node *Node) (tlist TailedList) {
 	return
 }
 
+func (tl *TailedList) IsNil() bool {
+	return tl == nil
+}
+
 func (tl *TailedList) IsEmpty() bool {
 	return tl.head == nil
+}
+
+func (tl *TailedList) Head() *Node {
+	if tl.IsNil() {
+		return nil
+	}
+	return tl.head
+}
+
+func (tl *TailedList) Tail() *Node {
+	if tl.IsNil() {
+		return nil
+	}
+	return tl.tail
 }
 
 func (tl *TailedList) AddAtEnd(val string) {
