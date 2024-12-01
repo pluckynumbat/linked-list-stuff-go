@@ -595,3 +595,68 @@ func TestIsNil(t *testing.T) {
 	}
 }
 
+func TestHead(t *testing.T) {
+
+	var nilList *TailedList
+	testNodes := []*Node{{"a", nil}, {"b", nil}, {"c", nil}}
+
+	threeNodeList := &TailedList{}
+	for _, node := range testNodes {
+		threeNodeList.AddAtEnd(node.data)
+	}
+
+	var tests = []struct {
+		name  string
+		input *TailedList
+		want  string
+	}{
+		{"nil list pointer", nilList, ""},
+		{"new allocator empty list", new(TailedList), ""},
+		{"composite literal empty list", &TailedList{}, ""},
+		{"composite literal single element list", &TailedList{testNodes[0], testNodes[0]}, "a"},
+		{"composite literal 2 element list", &TailedList{testNodes[0], testNodes[1]}, "a"},
+		{"composite literal 3 element list", threeNodeList, "a"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			got := test.input.Head().String()
+			if got != test.want {
+				t.Errorf("Head gave incorrect results, want: %v, got: %v", test.want, got)
+			}
+		})
+	}
+}
+
+func TestTail(t *testing.T) {
+
+	var nilList *TailedList
+	testNodes := []*Node{{"a", nil}, {"b", nil}, {"c", nil}}
+
+	threeNodeList := &TailedList{}
+	for _, node := range testNodes {
+		threeNodeList.AddAtEnd(node.data)
+	}
+
+	var tests = []struct {
+		name  string
+		input *TailedList
+		want  string
+	}{
+		{"nil list pointer", nilList, ""},
+		{"new allocator empty list", new(TailedList), ""},
+		{"composite literal empty list", &TailedList{}, ""},
+		{"composite literal single element list", &TailedList{testNodes[0], testNodes[0]}, "a"},
+		{"composite literal 2 element list", &TailedList{testNodes[0], testNodes[1]}, "b"},
+		{"composite literal 3 element list", threeNodeList, "c"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			got := test.input.Tail().String()
+			if got != test.want {
+				t.Errorf("Tail gave incorrect results, want: %v, got: %v", test.want, got)
+			}
+		})
+	}
+}
