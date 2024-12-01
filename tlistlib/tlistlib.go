@@ -43,6 +43,10 @@ func constructListFromNode(node *Node) (tlist TailedList) {
 	return
 }
 
+func (tl *TailedList) IsNil() bool {
+	return tl == nil
+}
+
 func (tl *TailedList) IsEmpty() bool {
 	return tl.head == nil
 }
