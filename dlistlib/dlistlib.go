@@ -61,7 +61,14 @@ func (dl *DoublyLinkedList) IsEmpty() bool {
 	return dl.head == nil
 }
 
-// Method ao add a new node to the beginning of a doubly linked list
+// Method to return a pointer to the Head of a doubly linked list
+func (dl *DoublyLinkedList) Head() *Node {
+	if dl.IsNil() {
+		return nil
+	}
+	return dl.head
+}
+
 func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
 
 	if dl.IsNil() {
