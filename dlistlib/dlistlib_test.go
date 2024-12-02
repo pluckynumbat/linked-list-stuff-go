@@ -909,3 +909,35 @@ func TestHead(t *testing.T) {
 	}
 }
 
+func TestTail(t *testing.T) {
+
+	var nilList *DoublyLinkedList
+	testNodes := []*Node{{nil, "a", nil}, {nil, "b", nil}, {nil, "c", nil}}
+
+	threeNodeList := &DoublyLinkedList{}
+	for _, node := range testNodes {
+		threeNodeList.AddAtEnd(node.data)
+	}
+
+	var tests = []struct {
+		name  string
+		input *DoublyLinkedList
+		want  string
+	}{
+		{"nil list pointer", nilList, "nil"},
+		{"new allocator empty list", new(DoublyLinkedList), "nil"},
+		{"composite literal empty list", &DoublyLinkedList{}, "nil"},
+		{"composite literal single element list", &DoublyLinkedList{testNodes[0], testNodes[0]}, "a"},
+		{"composite literal 2 element list", &DoublyLinkedList{testNodes[0], testNodes[1]}, "b"},
+		{"composite literal 3 element list", threeNodeList, "c"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			got := test.input.Tail().String()
+			if got != test.want {
+				t.Errorf("Tail gave incorrect results, want: %v, got: %v", test.want, got)
+			}
+		})
+	}
+}
