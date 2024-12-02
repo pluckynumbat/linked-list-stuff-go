@@ -69,6 +69,15 @@ func (dl *DoublyLinkedList) Head() *Node {
 	return dl.head
 }
 
+// Method to return a pointer to the Tail of a doubly linked list
+func (dl *DoublyLinkedList) Tail() *Node {
+	if dl.IsNil() {
+		return nil
+	}
+	return dl.tail
+}
+
+// Method to add a new node to the beginning of a doubly linked list
 func (dl *DoublyLinkedList) AddAtBeginning(val string) error {
 
 	if dl.IsNil() {
