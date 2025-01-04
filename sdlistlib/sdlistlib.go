@@ -56,3 +56,14 @@ func (list *SemiGenericList[T]) String() string {
 
 	return str
 }
+
+// Method to check whether a list is nil
+func (list *SemiGenericList[T]) IsNil() bool {
+	return list == nil
+}
+
+// Method to check whether a list is empty
+func (list *SemiGenericList[T]) IsEmpty() bool {
+	return list.IsNil() || list.head == nil
+}
+
