@@ -116,3 +116,85 @@ func TestListStates(t *testing.T) {
 		})
 	}
 }
+
+func TestHead(t *testing.T) {
+
+	var l1, l2, l3, l4, l5 *SemiGenericList[prInt]
+	l2 = &SemiGenericList[prInt]{}
+
+	n1 := &Node[prInt]{nil, 1, nil}
+	l3 = &SemiGenericList[prInt]{n1, n1}
+
+	n2 := &Node[prInt]{nil, 2, nil}
+	n1.next = n2
+	n2.prev = n1
+	l4 = &SemiGenericList[prInt]{n1, n2}
+
+	n3 := &Node[prInt]{nil, 3, nil}
+	n2.next = n3
+	n3.prev = n2
+	l5 = &SemiGenericList[prInt]{n1, n3}
+
+	tests := []struct {
+		name string
+		list *SemiGenericList[prInt]
+		want string
+	}{
+		{"nil list : test head", l1, "nil"},
+		{"empty list : test head", l2, "nil"},
+		{"1 element list : test head", l3, "1"},
+		{"2 element list : test head", l4, "1"},
+		{"3 element list : test head", l5, "1"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			want := test.want
+			got := test.list.Head().String()
+			if got != want {
+				t.Errorf("Got incorrect results for Head(), want: %v, got: %v", want, got)
+			}
+		})
+	}
+}
+
+func TestTail(t *testing.T) {
+
+	var l1, l2, l3, l4, l5 *SemiGenericList[prInt]
+	l2 = &SemiGenericList[prInt]{}
+
+	n1 := &Node[prInt]{nil, 1, nil}
+	l3 = &SemiGenericList[prInt]{n1, n1}
+
+	n2 := &Node[prInt]{nil, 2, nil}
+	n1.next = n2
+	n2.prev = n1
+	l4 = &SemiGenericList[prInt]{n1, n2}
+
+	n3 := &Node[prInt]{nil, 3, nil}
+	n2.next = n3
+	n3.prev = n2
+	l5 = &SemiGenericList[prInt]{n1, n3}
+
+	tests := []struct {
+		name string
+		list *SemiGenericList[prInt]
+		want string
+	}{
+		{"nil list : test head", l1, "nil"},
+		{"empty list : test head", l2, "nil"},
+		{"1 element list : test head", l3, "1"},
+		{"2 element list : test head", l4, "2"},
+		{"3 element list : test head", l5, "3"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			want := test.want
+			got := test.list.Tail().String()
+			if got != want {
+				t.Errorf("Got incorrect results for Head(), want: %v, got: %v", want, got)
+			}
+		})
+	}
+}
