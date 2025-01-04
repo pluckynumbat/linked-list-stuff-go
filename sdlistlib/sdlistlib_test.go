@@ -74,3 +74,45 @@ func TestListString(t *testing.T) {
 	}
 }
 
+func TestListStates(t *testing.T) {
+	var l1, l2, l3, l4, l5 *SemiGenericList[prInt]
+	l2 = &SemiGenericList[prInt]{}
+	l3 = new(SemiGenericList[prInt])
+
+	node := &Node[prInt]{nil, 1, nil}
+
+	l4 = &SemiGenericList[prInt]{}
+	l4.head = node
+	l4.tail = node
+
+	l5 = new(SemiGenericList[prInt])
+	l5.head = node
+	l5.tail = node
+
+	tests := []struct {
+		name string
+		list *SemiGenericList[prInt]
+		fn   func() bool
+		want bool
+	}{
+		{"nil list : test nil", l1, l1.IsNil, true},
+		{"struct literal empty list : test nil", l2, l2.IsNil, false},
+		{"struct literal empty list : test empty", l2, l2.IsEmpty, true},
+		{"new allocator empty list : test nil", l3, l3.IsNil, false},
+		{"new allocator empty list : test empty", l3, l3.IsEmpty, true},
+		{"struct literal non-empty list : test nil", l4, l4.IsNil, false},
+		{"struct literal non-empty list : test empty", l4, l4.IsEmpty, false},
+		{"new allocator non-empty list : test nil", l3, l3.IsNil, false},
+		{"new allocator non-empty list : test empty", l5, l5.IsEmpty, false},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			want := test.want
+			got := test.fn()
+			if got != want {
+				t.Errorf("Got incorrect results, want: %v, got: %v", want, got)
+			}
+		})
+	}
+}
