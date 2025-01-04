@@ -67,3 +67,21 @@ func (list *SemiGenericList[T]) IsEmpty() bool {
 	return list.IsNil() || list.head == nil
 }
 
+// Method to return a pointer to the head of the list
+func (list *SemiGenericList[T]) Head() *Node[T] {
+	if list.IsNil() {
+		return nil
+	}
+
+	return list.head
+}
+
+// Method to return a pointer to the tail of the list
+func (list *SemiGenericList[T]) Tail() *Node[T] {
+	if list.IsNil() {
+		return nil
+	}
+
+	return list.tail
+}
+
