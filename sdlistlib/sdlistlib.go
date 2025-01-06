@@ -85,3 +85,43 @@ func (list *SemiGenericList[T]) Tail() *Node[T] {
 	return list.tail
 }
 
+// Method to add a new node to the beginning of the list
+func (list *SemiGenericList[T]) AddAtBeginning(val T) error {
+	if list.IsNil() {
+		return nilListError
+	}
+
+	node := &Node[T]{nil, val, nil}
+
+	if list.IsEmpty() {
+		list.head = node
+		list.tail = node
+		return nil
+	}
+
+	node.next = list.head
+	list.head.prev = node
+	list.head = node
+	return nil
+}
+
+// Method to add a new node to the end of the list
+func (list *SemiGenericList[T]) AddAtEnd(val T) error {
+	if list.IsNil() {
+		return nilListError
+	}
+
+	node := &Node[T]{nil, val, nil}
+
+	if list.IsEmpty() {
+		list.head = node
+		list.tail = node
+		return nil
+	}
+
+	node.prev = list.tail
+	list.tail.next = node
+	list.tail = node
+	return nil
+}
+
