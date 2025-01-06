@@ -105,3 +105,23 @@ func (list *SemiGenericList[T]) AddAtBeginning(val T) error {
 	return nil
 }
 
+// Method to add a new node to the end of the list
+func (list *SemiGenericList[T]) AddAtEnd(val T) error {
+	if list.IsNil() {
+		return nilListError
+	}
+
+	node := &Node[T]{nil, val, nil}
+
+	if list.IsEmpty() {
+		list.head = node
+		list.tail = node
+		return nil
+	}
+
+	node.prev = list.tail
+	list.tail.next = node
+	list.tail = node
+	return nil
+}
+
