@@ -257,3 +257,60 @@ func TestAddAtBeginning(t *testing.T) {
 	}
 }
 
+func TestAddAtEnd(t *testing.T) {
+
+	var list *SemiGenericList[prInt]
+
+	t.Run("nil list", func(t *testing.T) {
+		err := list.AddAtEnd(1)
+		if err == nil {
+			t.Errorf("AddAtEnd() on a nil list should return an error")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	list = &SemiGenericList[prInt]{}
+
+	var tests = []struct {
+		name    string
+		val     prInt
+		expList string
+		expHead string
+		expTail string
+	}{
+		{"add to empty list", 1, "nil<-1->nil", "1", "1"},
+		{"add to 1 element list", 2, "nil<-1<=>2->nil", "1", "2"},
+		{"add to 2 element list", 3, "nil<-1<=>2<=>3->nil", "1", "3"},
+		{"add to 3 element list", 4, "nil<-1<=>2<=>3<=>4->nil", "1", "4"},
+		{"add to 4 element list", 5, "nil<-1<=>2<=>3<=>4<=>5->nil", "1", "5"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := list.AddAtEnd(test.val)
+			if err != nil {
+				t.Errorf("AddAtEnd() failed with error: %v", err)
+			} else {
+
+				got := list.String()
+				want := test.expList
+				if got != want {
+					t.Errorf("list after adding to it is incorrect, want: %v, got: %v", want, got)
+				}
+
+				got = list.Head().String()
+				want = test.expHead
+				if got != want {
+					t.Errorf("head after adding to the list is incorrect, want: %v, got: %v", want, got)
+				}
+
+				got = list.Tail().String()
+				want = test.expTail
+				if got != want {
+					t.Errorf("tail after adding to the list is incorrect, want: %v, got: %v", want, got)
+				}
+			}
+		})
+	}
+}
