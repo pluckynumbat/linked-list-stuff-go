@@ -314,6 +314,101 @@ func TestAddAtEnd(t *testing.T) {
 		})
 	}
 }
+
+func TestReverse(t *testing.T) {
+
+	var list *SemiGenericList[prInt]
+
+	t.Run("nil list", func(t *testing.T) {
+		err := list.Reverse()
+		if err == nil {
+			t.Errorf("Reverse() on a nil list should return an error")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	list = &SemiGenericList[prInt]{}
+
+	t.Run("empty list", func(t *testing.T) {
+		err := list.Reverse()
+		if err != nil {
+			t.Errorf("Reverse() failed with error: %v", err)
+		} else {
+			want := "empty"
+			got := list.String()
+
+			if got != want {
+				t.Errorf("Reverse() gave incorrect results, want: %v, got :%v", want, got)
+			}
+		}
+	})
+
+	var tests = []struct {
+		name    string
+		val     prInt
+		expList string
+		expHead string
+		expTail string
+	}{
+		{"reverse 1 element list", 1, "nil<-1->nil", "1", "1"},
+		{"reverse 2 element list", 2, "nil<-2<=>1->nil", "2", "1"},
+		{"reverse 3 element list", 3, "nil<-3<=>1<=>2->nil", "3", "2"},
+		{"reverse 4 element list", 4, "nil<-4<=>2<=>1<=>3->nil", "4", "3"},
+		{"reverse 5 element list", 5, "nil<-5<=>3<=>1<=>2<=>4->nil", "5", "4"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := list.AddAtEnd(test.val)
+			if err != nil {
+				t.Errorf("AddAtEnd() failed with error: %v", err)
+			} else {
+
+				err2 := list.Reverse()
+				if err2 != nil {
+					t.Errorf("Reverse() failed with error: %v", err2)
+				} else {
+
+					got := list.String()
+					want := test.expList
+					if got != want {
+						t.Errorf("list after reversing is incorrect, want: %v, got: %v", want, got)
+					}
+
+					head := list.Head()
+					got = head.String()
+					want = test.expHead
+					if got != want {
+						t.Errorf("head after reversing the list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if head != nil {
+						headPrev := head.prev
+						if headPrev != nil {
+							t.Errorf("head's prev pointer should always be nil, got: %v", headPrev)
+						}
+					}
+
+					tail := list.Tail()
+					got = tail.String()
+					want = test.expTail
+					if got != want {
+						t.Errorf("tail after reversing the list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if tail != nil {
+						tailNext := tail.next
+						if tailNext != nil {
+							t.Errorf("head's prev pointer should always be nil, got: %v", tailNext)
+						}
+					}
+				}
+			}
+		})
+	}
+}
+
 func TestCopy(t *testing.T) {
 
 	var list *SemiGenericList[prInt]

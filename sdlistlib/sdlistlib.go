@@ -125,6 +125,34 @@ func (list *SemiGenericList[T]) AddAtEnd(val T) error {
 	return nil
 }
 
+// Method to reverse the semi generic doubly linked list
+func (list *SemiGenericList[T]) Reverse() error {
+	if list.IsNil() {
+		return nilListError
+	}
+
+	if list.IsEmpty() {
+		return nil
+	}
+
+	if list.head == list.tail {
+		return nil
+	}
+
+	runner := list.head
+	var nxt *Node[T]
+
+	for runner != nil {
+		nxt = runner.next
+
+		runner.prev, runner.next = runner.next, runner.prev
+		runner = nxt
+	}
+
+	list.head, list.tail = list.tail, list.head
+	return nil
+}
+
 // Method to copy a semi generic doubly linked list
 func (list *SemiGenericList[T]) Copy() (*SemiGenericList[T], error) {
 	if list.IsNil() {
