@@ -314,3 +314,96 @@ func TestAddAtEnd(t *testing.T) {
 		})
 	}
 }
+func TestCopy(t *testing.T) {
+
+	var list *SemiGenericList[prInt]
+
+	t.Run("nil list", func(t *testing.T) {
+		_, err := list.Copy()
+		if err == nil {
+			t.Errorf("Copy() on a nil list should return an error")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	list = &SemiGenericList[prInt]{}
+
+	t.Run("empty list", func(t *testing.T) {
+		copy, err := list.Copy()
+		if err != nil {
+			t.Errorf("Copy() failed with error: %v", err)
+		} else {
+			want := "empty"
+			got := copy.String()
+
+			if got != want {
+				t.Errorf("Reverse() gave incorrect results, want: %v, got :%v", want, got)
+			}
+		}
+	})
+
+	var tests = []struct {
+		name    string
+		val     prInt
+		expList string
+		expHead string
+		expTail string
+	}{
+		{"copy 1 element list", 1, "nil<-1->nil", "1", "1"},
+		{"copy 2 element list", 2, "nil<-2<=>1->nil", "2", "1"},
+		{"copy 3 element list", 3, "nil<-3<=>2<=>1->nil", "3", "1"},
+		{"copy 4 element list", 4, "nil<-4<=>3<=>2<=>1->nil", "4", "1"},
+		{"copy 5 element list", 5, "nil<-5<=>4<=>3<=>2<=>1->nil", "5", "1"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := list.AddAtBeginning(test.val)
+			if err != nil {
+				t.Errorf("AddAtBeginning() failed with error: %v", err)
+			} else {
+
+				copy, err2 := list.Copy()
+				if err2 != nil {
+					t.Errorf("Copy() failed with error: %v", err2)
+				} else {
+
+					got := copy.String()
+					want := test.expList
+					if got != want {
+						t.Errorf("copied list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					head := copy.Head()
+					got = head.String()
+					want = test.expHead
+					if got != want {
+						t.Errorf("head of the copied list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if head != nil {
+						headPrev := head.prev
+						if headPrev != nil {
+							t.Errorf("head's prev pointer should always be nil, got: %v", headPrev)
+						}
+					}
+
+					tail := copy.Tail()
+					got = tail.String()
+					want = test.expTail
+					if got != want {
+						t.Errorf("tail of the copied list is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if tail != nil {
+						tailNext := tail.next
+						if tailNext != nil {
+							t.Errorf("head's prev pointer should always be nil, got: %v", tailNext)
+						}
+					}
+				}
+			}
+		})
+	}
+}

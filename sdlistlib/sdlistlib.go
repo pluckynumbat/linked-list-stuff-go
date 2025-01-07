@@ -125,3 +125,20 @@ func (list *SemiGenericList[T]) AddAtEnd(val T) error {
 	return nil
 }
 
+// Method to copy a semi generic doubly linked list
+func (list *SemiGenericList[T]) Copy() (*SemiGenericList[T], error) {
+	if list.IsNil() {
+		return nil, nilListError
+	}
+
+	result := &SemiGenericList[T]{}
+	runner := list.head
+
+	for runner != nil {
+		result.AddAtEnd(runner.data)
+		runner = runner.next
+	}
+
+	return result, nil
+}
+
