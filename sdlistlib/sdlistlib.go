@@ -244,3 +244,27 @@ func (list *SemiGenericList[T]) RemoveFirst() (*Node[T], error) {
 	return removed, nil
 }
 
+// Method to remove the last element (tail) of the list and return it
+func (list *SemiGenericList[T]) RemoveLast() (*Node[T], error) {
+	if list.IsNil() {
+		return nil, nilListError
+	}
+
+	if list.IsEmpty() {
+		return nil, emptyListError
+	}
+
+	removed := list.tail
+
+	// single element list
+	if list.head == list.tail {
+		list.head = nil
+		list.tail = nil
+		return removed, nil
+	}
+
+	//multi element list
+	list.tail = list.tail.prev
+	list.tail.next = nil
+	return removed, nil
+}

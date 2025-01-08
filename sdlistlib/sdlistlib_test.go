@@ -717,3 +717,105 @@ func TestRemoveFirst(t *testing.T) {
 	}
 }
 
+func TestRemoveLast(t *testing.T) {
+	var list *SemiGenericList[prInt]
+
+	t.Run("nil list", func(t *testing.T) {
+		_, err := list.RemoveLast()
+		if err == nil {
+			t.Errorf("RemoveLast() on a nil list should return an error")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	list = &SemiGenericList[prInt]{}
+	t.Run("empty list", func(t *testing.T) {
+		_, err := list.RemoveLast()
+		if err == nil {
+			t.Errorf("RemoveLast() on an empty list should return an error")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	// some setup
+	var val prInt
+	for val = 1; val <= 5; val++ {
+		err := list.AddAtEnd(val)
+		if err != nil {
+			t.Fatalf("AddAtEnd() failed, error: %v", err)
+		}
+	}
+
+	var tests = []struct {
+		name    string
+		expRem  string
+		expList string
+		expHead string
+		expTail string
+		isEmpty bool
+	}{
+		{"5 element list", "5", "nil<-1<=>2<=>3<=>4->nil", "1", "4", false},
+		{"4 element list", "4", "nil<-1<=>2<=>3->nil", "1", "3", false},
+		{"3 element list", "3", "nil<-1<=>2->nil", "1", "2", false},
+		{"2 element list", "2", "nil<-1->nil", "1", "1", false},
+		{"1 element list", "1", "empty", "nil", "nil", true},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			rem, err := list.RemoveLast()
+			if err != nil {
+				t.Errorf("RemoveLast() failed unexpectedly, error %v", err)
+			} else {
+				want := test.expRem
+				got := rem.String()
+				if got != want {
+					t.Errorf("item removed is incorrect, want: %v, got: %v", want, got)
+				}
+
+				want = test.expList
+				got = list.String()
+				if got != want {
+					t.Errorf("list after removing last element is incorrect, want: %v, got: %v", want, got)
+				}
+
+				head := list.Head()
+				want = test.expHead
+				got = head.String()
+				if got != want {
+					t.Errorf("head after removing last element is incorrect, want: %v, got: %v", want, got)
+				}
+
+				if head != nil {
+					headPrev := head.prev
+					if headPrev != nil {
+						t.Errorf("head's prev pointer should always be nil, got: %v", headPrev)
+					}
+				}
+
+				tail := list.Tail()
+				want = test.expTail
+				got = list.Tail().String()
+				if got != want {
+					t.Errorf("tail after removing last element is incorrect, want: %v, got: %v", want, got)
+				}
+
+				if tail != nil {
+					tailNext := tail.next
+					if tailNext != nil {
+						t.Errorf("tail's next pointer should always be nil, got: %v", tailNext)
+					}
+				}
+
+				wantEmpty := test.isEmpty
+				gotEmpty := list.IsEmpty()
+
+				if gotEmpty != wantEmpty {
+					t.Errorf("IsEmpty()'s value after removal is incorrect, want: %v, got: %v", wantEmpty, gotEmpty)
+				}
+			}
+		})
+	}
+}
