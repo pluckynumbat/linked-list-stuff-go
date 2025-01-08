@@ -502,3 +502,115 @@ func TestCopy(t *testing.T) {
 		})
 	}
 }
+
+func TestRemoveValue(t *testing.T) {
+
+	var list *SemiGenericList[prInt]
+	t.Run("nil list", func(t *testing.T) {
+		err := list.RemoveValue(0)
+		if err == nil {
+			t.Errorf("RemoveValue() on a nil list should return an error")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	list = &SemiGenericList[prInt]{}
+	t.Run("empty list", func(t *testing.T) {
+		err := list.RemoveValue(0)
+		if err == nil {
+			t.Errorf("RemoveValue() on an empty list should return an error")
+		} else {
+			fmt.Println(err)
+		}
+	})
+
+	// some setup
+	var val prInt
+	for val = 1; val <= 5; val++ {
+		err := list.AddAtEnd(val)
+		if err != nil {
+			t.Fatalf("AddAtEnd() failed, error: %v", err)
+		}
+	}
+
+	var tests = []struct {
+		name    string
+		value   prInt
+		isValid bool
+		expList string
+		expHead string
+		expTail string
+		isEmpty bool
+	}{
+		{"5 element list, invalid value", 6, false, "nil<-1<=>2<=>3<=>4<=>5->nil", "1", "5", false},
+		{"5 element list, valid value", 1, true, "nil<-2<=>3<=>4<=>5->nil", "2", "5", false},
+		{"4 element list, invalid value", 7, false, "nil<-2<=>3<=>4<=>5->nil", "1", "5", false},
+		{"4 element list, valid value", 4, true, "nil<-2<=>3<=>5->nil", "2", "5", false},
+		{"3 element list, invalid value", 8, false, "nil<-2<=>3<=>5->nil", "2", "5", false},
+		{"3 element list, valid value", 5, true, "nil<-2<=>3->nil", "2", "3", false},
+		{"2 element list, invalid value", 9, false, "nil<-2<=>3->nil", "2", "3", false},
+		{"2 element list, valid value", 3, true, "nil<-2->nil", "2", "2", false},
+		{"1 element list, invalid value", 0, false, "nil<-2->nil", "2", "2", false},
+		{"1 element list, valid value", 2, true, "empty", "nil", "nil", true},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			err := list.RemoveValue(test.value)
+
+			if !test.isValid {
+				if err == nil {
+					t.Error("RemoveValue() should have returned an error when trying to remove an invalid element")
+				} else {
+					fmt.Println(err)
+				}
+			} else { // valid element being removed
+				if err != nil {
+					t.Errorf("RemoveValue() failed unexpectedly, error %v", err)
+				} else {
+					got := list.String()
+					want := test.expList
+					if got != want {
+						t.Errorf("list after removal is incorrect, want: %v, got: %v", want, got)
+					}
+
+					head := list.Head()
+					got = head.String()
+					want = test.expHead
+					if got != want {
+						t.Errorf("head after removal is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if head != nil {
+						headPrev := head.prev
+						if headPrev != nil {
+							t.Errorf("head's prev pointer should always be nil, got: %v", headPrev)
+						}
+					}
+
+					tail := list.Tail()
+					got = tail.String()
+					want = test.expTail
+					if got != want {
+						t.Errorf("tail after removal is incorrect, want: %v, got: %v", want, got)
+					}
+
+					if tail != nil {
+						tailNext := tail.next
+						if tailNext != nil {
+							t.Errorf("head's prev pointer should always be nil, got: %v", tailNext)
+						}
+					}
+
+					gotEmpty := list.IsEmpty()
+					wantEmpty := test.isEmpty
+					if gotEmpty != wantEmpty {
+						t.Errorf("IsEmpty()'s value after removal is incorrect, want: %v, got: %v", wantEmpty, gotEmpty)
+					}
+				}
+			}
+		})
+	}
+}
+

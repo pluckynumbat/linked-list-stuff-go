@@ -170,3 +170,51 @@ func (list *SemiGenericList[T]) Copy() (*SemiGenericList[T], error) {
 	return result, nil
 }
 
+// Method to remove a given value from the list, if present
+// If present more than once, this will remove the first occurrence
+func (list *SemiGenericList[T]) RemoveValue(val T) error {
+	if list.IsNil() {
+		return nilListError
+	}
+
+	if list.IsEmpty() {
+		return emptyListError
+	}
+
+	runner := list.head
+
+	for runner != nil {
+		// String() is needed to compare the values
+		if runner.data.String() == val.String() {
+
+			// single element list
+			if list.head == list.tail {
+				list.head = nil
+				list.tail = nil
+				return nil
+			}
+
+			// first element of the list
+			if runner == list.head {
+				list.head = list.head.next
+				list.head.prev = nil
+				return nil
+			}
+
+			// last element of the list
+			if runner == list.tail {
+				list.tail = list.tail.prev
+				list.tail.next = nil
+				return nil
+			}
+
+			//any other element
+			runner.prev.next = runner.next
+			runner.next.prev = runner.prev
+			return nil
+		}
+		runner = runner.next
+	}
+
+	return fmt.Errorf("The value: %v is not present in the list", val)
+}
