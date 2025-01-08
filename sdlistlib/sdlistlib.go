@@ -218,3 +218,29 @@ func (list *SemiGenericList[T]) RemoveValue(val T) error {
 
 	return fmt.Errorf("The value: %v is not present in the list", val)
 }
+
+// Method to remove the first element (head) of the list and return it
+func (list *SemiGenericList[T]) RemoveFirst() (*Node[T], error) {
+	if list.IsNil() {
+		return nil, nilListError
+	}
+
+	if list.IsEmpty() {
+		return nil, emptyListError
+	}
+
+	removed := list.head
+
+	// single element list
+	if list.head == list.tail {
+		list.head = nil
+		list.tail = nil
+		return removed, nil
+	}
+
+	//multi element list
+	list.head = list.head.next
+	list.head.prev = nil
+	return removed, nil
+}
+
