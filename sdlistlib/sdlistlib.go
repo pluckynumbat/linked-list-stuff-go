@@ -7,6 +7,7 @@ import (
 	"fmt"
 )
 
+var nilNodeError error = fmt.Errorf("The node is nil")
 var nilListError error = fmt.Errorf("The list is nil")
 var emptyListError error = fmt.Errorf("The list is empty")
 
@@ -24,6 +25,15 @@ func (node *Node[T]) String() string {
 	}
 
 	return node.data.String()
+}
+
+// Method to get the data stored in the Node
+func (node *Node[T]) GetData() (T, error) {
+	if node == nil {
+		return *new(T), nilNodeError
+	}
+
+	return node.data, nil
 }
 
 type SemiGenericList[T fmt.Stringer] struct {
