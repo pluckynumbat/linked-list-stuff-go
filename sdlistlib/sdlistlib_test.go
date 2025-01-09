@@ -5,10 +5,20 @@ import (
 	"testing"
 )
 
-type prInt int // printable int!
+type prInt int       // printable int!
+type prBool bool     // printable bool
+type prString string // printable string, yeah
 
 func (p prInt) String() string {
 	return fmt.Sprintf("%v", int(p))
+}
+
+func (p prBool) String() string {
+	return fmt.Sprintf("%v", bool(p))
+}
+
+func (p prString) String() string {
+	return fmt.Sprintf("%v", string(p))
 }
 
 func TestNodeString(t *testing.T) {
@@ -815,6 +825,89 @@ func TestRemoveLast(t *testing.T) {
 				if gotEmpty != wantEmpty {
 					t.Errorf("IsEmpty()'s value after removal is incorrect, want: %v, got: %v", wantEmpty, gotEmpty)
 				}
+			}
+		})
+	}
+}
+
+func TestNodeGetData(t *testing.T) {
+	var n1, n2 *Node[prInt]
+	n2 = &Node[prInt]{nil, 1, nil}
+
+	prIntTests := []struct {
+		name   string
+		node   *Node[prInt]
+		expVal prInt
+		expErr error
+	}{
+		{"type prInt : nil node : test get data", n1, 0, nilNodeError},
+		{"type prInt : non-nil node : test get data", n2, 1, nil},
+	}
+
+	for _, test := range prIntTests {
+		t.Run(test.name, func(t *testing.T) {
+			wantVal := test.expVal
+			gotVal, err := test.node.GetData()
+			if err != test.expErr {
+				t.Errorf("Unexpected error for node's GetData(), want: %v, got: %v", test.expErr, err)
+			}
+
+			if gotVal != test.expVal {
+				t.Errorf("Incorrect result fornode's GetData(), want: %v, got: %v", wantVal, gotVal)
+			}
+		})
+	}
+
+	var n3, n4 *Node[prBool]
+	n4 = &Node[prBool]{nil, true, nil}
+
+	prBoolTests := []struct {
+		name   string
+		node   *Node[prBool]
+		expVal prBool
+		expErr error
+	}{
+		{"type prBool : nil node : test get data", n3, false, nilNodeError},
+		{"type prBool : non-nil node : test get data", n4, true, nil},
+	}
+
+	for _, test := range prBoolTests {
+		t.Run(test.name, func(t *testing.T) {
+			wantVal := test.expVal
+			gotVal, err := test.node.GetData()
+			if err != test.expErr {
+				t.Errorf("Unexpected error for node's GetData(), want: %v, got: %v", test.expErr, err)
+			}
+
+			if gotVal != test.expVal {
+				t.Errorf("Incorrect result fornode's GetData(), want: %v, got: %v", wantVal, gotVal)
+			}
+		})
+	}
+
+	var n5, n6 *Node[prString]
+	n6 = &Node[prString]{nil, "a", nil}
+
+	prStringTests := []struct {
+		name   string
+		node   *Node[prString]
+		expVal prString
+		expErr error
+	}{
+		{"type prString : nil node : test get data", n5, "", nilNodeError},
+		{"type prString : non-nil node : test get data", n6, "a", nil},
+	}
+
+	for _, test := range prStringTests {
+		t.Run(test.name, func(t *testing.T) {
+			wantVal := test.expVal
+			gotVal, err := test.node.GetData()
+			if err != test.expErr {
+				t.Errorf("Unexpected error for node's GetData(), want: %v, got: %v", test.expErr, err)
+			}
+
+			if gotVal != test.expVal {
+				t.Errorf("Incorrect result fornode's GetData(), want: %v, got: %v", wantVal, gotVal)
 			}
 		})
 	}
